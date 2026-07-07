@@ -1,0 +1,13 @@
+# Keep this file intentionally narrow.
+# The Vercel project root is deploy/portfolio-public, so anything outside this
+# folder is already excluded from deployment.
+
+# Local development artifacts
+.env
+.env.*
+node_modules/
+*.log
+
+# Do not ignore api/private-data, api/private-prompts, or api/private-templates.
+# They are server-only files required by the owner-only admin tailoring functions
+# and are bundled through vercel.json includeFiles.

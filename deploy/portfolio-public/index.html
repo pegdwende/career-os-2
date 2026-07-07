@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rodrigue Compaore | Engineering Portfolio</title>
+    <meta
+      name="description"
+      content="Public portfolio for Rodrigue Compaore, a software engineering manager and technical lead focused on enterprise platforms, reporting, analytics, AI workflows, APIs, and cloud delivery."
+    />
+    <meta name="robots" content="index,follow" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="Rodrigue Compaore portfolio home" data-track="nav-home">
+        <span class="brand-mark">RC</span>
+        <span>Rodrigue Compaore</span>
+      </a>
+      <nav class="nav-links" aria-label="Portfolio sections">
+        <a href="#work" data-track="nav-work">Work</a>
+        <a href="#leadership" data-track="nav-leadership">Leadership</a>
+        <a href="#architecture" data-track="nav-architecture">Architecture</a>
+        <a href="#evidence" data-track="nav-evidence">Evidence</a>
+        <a href="#assistant" data-track="nav-assistant">AI Chat</a>
+        <a href="#skills" data-track="nav-skills">Skills</a>
+        <a href="#contact" data-track="nav-contact">Contact</a>
+        <a href="privacy.html" data-track="nav-privacy">Privacy</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Software Engineering Manager | Technical Lead</p>
+          <h1 id="hero-title">Enterprise platforms with delivery discipline.</h1>
+          <p class="hero-summary">
+            I lead engineers and build production systems across reporting, analytics, AI document
+            processing, secure file workflows, APIs, Kubernetes, Helm, and cloud delivery.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#work" data-track="cta-view-work">View Work</a>
+            <a class="button secondary" href="resume.html" data-track="cta-public-resume">Public Resume</a>
+          </div>
+        </div>
+
+        <div class="hero-stage" aria-label="Portfolio system status">
+          <img
+            src="assets/platform-architecture-hero.png"
+            alt="Enterprise dashboards, architecture screens, data pipelines, and cloud systems"
+          />
+          <div class="system-panel" aria-label="Current focus areas">
+            <div class="panel-row">
+              <span class="status-dot"></span>
+              <span>Delivery signal</span>
+              <strong>green</strong>
+            </div>
+            <div class="panel-grid">
+              <button type="button" data-signal="leadership" data-track="signal-leadership">Team</button>
+              <button type="button" data-signal="platform" data-track="signal-platform">Platform</button>
+              <button type="button" data-signal="data" data-track="signal-data">Data</button>
+              <button type="button" data-signal="ai" data-track="signal-ai">AI</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="metrics" aria-label="Career metrics">
+        <div>
+          <strong>10+ years</strong>
+          <span>Software engineering experience</span>
+        </div>
+        <div>
+          <strong>12 engineers</strong>
+          <span>Leadership and direct reports</span>
+        </div>
+        <div>
+          <strong>100 tenants</strong>
+          <span>ClickHouse analytics scale</span>
+        </div>
+        <div>
+          <strong>1,000/day</strong>
+          <span>Reporting workload scale</span>
+        </div>
+      </section>
+
+      <section class="section intro-grid" id="leadership">
+        <div>
+          <p class="section-kicker">Leadership Focus</p>
+          <h2>Hands-on leadership from architecture through production.</h2>
+        </div>
+        <div class="leadership-list">
+          <p>
+            I operate where technical judgment, team execution, and production ownership meet:
+            scoping with product partners, mentoring engineers, reviewing architecture, improving
+            delivery systems, and owning outcomes after release.
+          </p>
+          <ul>
+            <li>Team leadership, coaching, architecture reviews, code reviews, and one-on-ones.</li>
+            <li>Budget planning and prioritization for reporting and ETL solutions.</li>
+            <li>Production support through monitoring, incident response, tuning, and reliability work.</li>
+            <li>Cloud-native delivery experience with Docker, Kubernetes, Helm, CI/CD, AWS, and Azure.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="work">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Selected Work</p>
+            <h2>Systems I have led and built</h2>
+          </div>
+          <div class="filters" aria-label="Project filters">
+            <button class="filter active" type="button" data-filter="all" data-track="filter-all">All</button>
+            <button class="filter" type="button" data-filter="leadership" data-track="filter-leadership">Leadership</button>
+            <button class="filter" type="button" data-filter="data" data-track="filter-data">Data</button>
+            <button class="filter" type="button" data-filter="ai" data-track="filter-ai">AI</button>
+            <button class="filter" type="button" data-filter="platform" data-track="filter-platform">Platform</button>
+          </div>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card" data-tags="leadership data platform" data-project="reporting">
+            <div class="project-topline">
+              <span>Reporting Platform</span>
+              <span>C# | .NET | SQL | Kafka</span>
+            </div>
+            <h3>Enterprise Reporting Platform</h3>
+            <p>
+              Led development of configurable reporting and ETL workflows for business-critical
+              enterprise reporting.
+            </p>
+            <ul>
+              <li>Supported approximately 1,000 reports per day.</li>
+              <li>Improved extensibility through reusable reporting components.</li>
+              <li>Owned delivery planning, stakeholder alignment, and production support.</li>
+            </ul>
+            <button class="card-action" type="button" data-signal="reporting" data-track="open-reporting">Open Signal</button>
+          </article>
+
+          <article class="project-card" data-tags="data platform" data-project="clickhouse">
+            <div class="project-topline">
+              <span>Analytics Platform</span>
+              <span>ClickHouse | SQL | ETL</span>
+            </div>
+            <h3>ClickHouse Analytics Platform</h3>
+            <p>
+              Designed analytics architecture for high-volume operational reporting and tenant-scale
+              datasets.
+            </p>
+            <ul>
+              <li>Supported analytical workloads across approximately 100 tenants.</li>
+              <li>Focused on schema design, ingestion workflows, and query optimization.</li>
+              <li>Modernized reporting architecture for stronger analytical scalability.</li>
+            </ul>
+            <button class="card-action" type="button" data-signal="clickhouse" data-track="open-clickhouse">Open Signal</button>
+          </article>
+
+          <article class="project-card" data-tags="ai data platform" data-project="ai-reporting">
+            <div class="project-topline">
+              <span>AI Reporting</span>
+              <span>Python | FastAPI | OCR | LLMs</span>
+            </div>
+            <h3>AI Reporting Platform</h3>
+            <p>
+              Built document processing and structured extraction workflows using OCR and LLM
+              technologies.
+            </p>
+            <ul>
+              <li>Designed extraction and validation workflows for approximately 1,000 files.</li>
+              <li>Reduced manual extraction effort through automation.</li>
+              <li>Led ambiguous technical discovery across AI, reporting, and backend systems.</li>
+            </ul>
+            <button class="card-action" type="button" data-signal="ai-reporting" data-track="open-ai-reporting">Open Signal</button>
+          </article>
+
+          <article class="project-card" data-tags="leadership platform" data-project="file-platform">
+            <div class="project-topline">
+              <span>File Platform</span>
+              <span>.NET | REST APIs | SFTP | RabbitMQ</span>
+            </div>
+            <h3>Enterprise File Platform</h3>
+            <p>
+              Designed secure file storage, sharing, transfer, and background processing workflows
+              for enterprise users.
+            </p>
+            <ul>
+              <li>Improved file transfer workflows to be approximately 50% faster.</li>
+              <li>Supported secure enterprise integration workflows and on-demand transfers.</li>
+              <li>Used asynchronous processing and API design to improve reliability.</li>
+            </ul>
+            <button class="card-action" type="button" data-signal="file-platform" data-track="open-file-platform">Open Signal</button>
+          </article>
+        </div>
+
+        <aside class="signal-board" aria-live="polite">
+          <p class="section-kicker">Interactive Signal</p>
+          <h3 id="signal-title">Select a signal</h3>
+          <p id="signal-copy">
+            Use the project buttons or the hero controls to see how leadership, platform delivery,
+            data engineering, and AI work connect.
+          </p>
+        </aside>
+      </section>
+
+      <section class="section architecture-section" id="architecture" aria-labelledby="architecture-title">
+        <div class="architecture-heading">
+          <div>
+            <p class="section-kicker">Architecture Judgment</p>
+            <h2 id="architecture-title">How I approach systems without exposing private designs.</h2>
+          </div>
+          <p>
+            These are pattern-level examples only. They show decision-making, tradeoffs, and
+            operating principles without revealing proprietary architecture, internal services,
+            schemas, data flows, or confidential implementation details.
+          </p>
+        </div>
+
+        <div class="architecture-grid">
+          <div class="principle-list" aria-label="Architecture principles">
+            <button class="principle active" type="button" data-architecture="reporting" data-track="architecture-reporting">
+              High-volume reporting
+            </button>
+            <button class="principle" type="button" data-architecture="ai-documents" data-track="architecture-ai-documents">
+              AI document processing
+            </button>
+            <button class="principle" type="button" data-architecture="secure-files" data-track="architecture-secure-files">
+              Secure file workflows
+            </button>
+            <button class="principle" type="button" data-architecture="tenant-analytics" data-track="architecture-tenant-analytics">
+              Tenant-scale analytics
+            </button>
+            <button class="principle" type="button" data-architecture="cloud-delivery" data-track="architecture-cloud-delivery">
+              Cloud delivery
+            </button>
+          </div>
+
+          <article class="architecture-panel" aria-live="polite">
+            <p class="section-kicker">Decision Framework</p>
+            <h3 id="architecture-title-panel">High-volume reporting</h3>
+            <dl>
+              <div>
+                <dt>Problem type</dt>
+                <dd id="architecture-problem">Many users need reliable, repeatable reports from operational data.</dd>
+              </div>
+              <div>
+                <dt>Architecture lens</dt>
+                <dd id="architecture-lens">Separate reusable report definition, execution, delivery, and observability concerns.</dd>
+              </div>
+              <div>
+                <dt>Tradeoffs</dt>
+                <dd id="architecture-tradeoffs">Balance flexibility with supportability, and prefer predictable operations over clever one-off logic.</dd>
+              </div>
+              <div>
+                <dt>What this demonstrates</dt>
+                <dd id="architecture-proof">Platform thinking, reliability ownership, stakeholder alignment, and production delivery.</dd>
+              </div>
+            </dl>
+          </article>
+        </div>
+      </section>
+
+      <section class="section evidence-section" id="evidence" aria-labelledby="evidence-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Skill Evidence Matrix</p>
+            <h2 id="evidence-title">Recruiter keywords tied to public proof.</h2>
+          </div>
+          <p class="evidence-intro">
+            A fast way to map role requirements to demonstrated experience without exposing private
+            implementation details.
+          </p>
+        </div>
+
+        <div class="evidence-grid" aria-label="Skill evidence matrix">
+          <article>
+            <span>Kubernetes / Helm</span>
+            <h3>Cloud-native delivery</h3>
+            <p>Containerized delivery, Helm, Infrastructure as Code, CI/CD, AWS, Azure, and production ownership.</p>
+          </article>
+          <article>
+            <span>Engineering Manager</span>
+            <h3>12 direct reports</h3>
+            <p>Team leadership, mentoring, architecture reviews, code reviews, one-on-ones, and delivery planning.</p>
+          </article>
+          <article>
+            <span>Budget Ownership</span>
+            <h3>Reporting and ETL</h3>
+            <p>Budget planning and prioritization for reporting and ETL solutions.</p>
+          </article>
+          <article>
+            <span>ClickHouse / Analytics</span>
+            <h3>Tenant-scale data</h3>
+            <p>Analytics platform work across approximately 100 tenants with schema, ingestion, and query optimization focus.</p>
+          </article>
+          <article>
+            <span>AI / OCR / LLMs</span>
+            <h3>Document workflows</h3>
+            <p>AI reporting workflows using OCR, LLM integration, validation, and structured extraction across approximately 1,000 files.</p>
+          </article>
+          <article>
+            <span>APIs / Async Systems</span>
+            <h3>Enterprise platforms</h3>
+            <p>.NET, REST APIs, SFTP, RabbitMQ, Kafka, secure file workflows, and background processing patterns.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section why-section" aria-labelledby="why-title">
+        <div>
+          <p class="section-kicker">Why Me</p>
+          <h2 id="why-title">A practical engineering leader for platform-heavy teams.</h2>
+        </div>
+        <div class="why-grid">
+          <article>
+            <h3>I lead teams and stay close to architecture.</h3>
+            <p>My work combines direct people leadership, technical coaching, code review, architecture review, and production accountability.</p>
+          </article>
+          <article>
+            <h3>I build across data, AI, cloud, and enterprise workflows.</h3>
+            <p>The public work spans reporting, analytics, AI document processing, secure file workflows, APIs, Kubernetes, Helm, and CI/CD.</p>
+          </article>
+          <article>
+            <h3>I communicate tradeoffs without exposing confidential details.</h3>
+            <p>I can explain architecture patterns, decision frameworks, risks, and outcomes while respecting NDA boundaries.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section assistant-section" id="assistant" aria-labelledby="assistant-title">
+        <div class="assistant-heading">
+          <div>
+            <p class="section-kicker">Recruiter AI Chat</p>
+            <h2 id="assistant-title">Ask a grounded assistant about my experience.</h2>
+          </div>
+          <p>
+            The assistant answers only from the public portfolio profile. It will not answer from
+            hidden notes, recruiter prep, target-role match scoring, private files, or salary
+            assumptions.
+          </p>
+        </div>
+
+        <div class="chat-shell" data-chat>
+          <div class="chat-suggestions" aria-label="Suggested questions">
+            <button type="button" data-chat-question="What kind of engineering teams has Rodrigue led?" data-track="chat-suggest-team">
+              Team leadership
+            </button>
+            <button type="button" data-chat-question="How strong is his Kubernetes and Helm experience?" data-track="chat-suggest-k8s">
+              Kubernetes and Helm
+            </button>
+            <button type="button" data-chat-question="What data platform work has he done?" data-track="chat-suggest-data">
+              Data platforms
+            </button>
+            <button type="button" data-chat-question="What AI experience does he have?" data-track="chat-suggest-ai">
+              AI experience
+            </button>
+            <button type="button" data-chat-question="What makes him a fit for engineering manager roles?" data-track="chat-suggest-manager">
+              Manager fit
+            </button>
+            <button type="button" data-chat-question="How does Rodrigue ramp up on new technology stacks?" data-track="chat-suggest-ramp">
+              Ramp-up ability
+            </button>
+            <button type="button" data-chat-question="How does Rodrigue approach architecture without exposing confidential details?" data-track="chat-suggest-architecture">
+              Architecture judgment
+            </button>
+          </div>
+
+          <div class="chat-log" data-chat-log aria-live="polite">
+            <div class="chat-message assistant">
+              <strong>Assistant</strong>
+              <p>
+                I can answer recruiter questions about Rodrigue's public experience, leadership,
+                platforms, data work, AI work, and cloud delivery.
+              </p>
+            </div>
+          </div>
+
+          <form class="chat-form" data-chat-form>
+            <label class="sr-only" for="chat-message">Ask a recruiter question</label>
+            <textarea
+              id="chat-message"
+              name="message"
+              maxlength="700"
+              rows="3"
+              placeholder="Ask about leadership, platforms, Kubernetes, Helm, data, or AI experience..."
+              required
+            ></textarea>
+            <div class="chat-controls">
+              <label class="consent-check">
+                <input type="checkbox" name="storeTranscript" />
+                <span>Allow this conversation to be stored for up to 90 days.</span>
+              </label>
+              <button class="button primary" type="submit" data-track="chat-submit">Ask</button>
+            </div>
+            <p class="chat-status" data-chat-status role="status"></p>
+          </form>
+
+          <form class="contact-capture" data-contact-form hidden>
+            <h3>Want Rodrigue to follow up?</h3>
+            <p>Share recruiter contact details only if you want them stored for up to 90 days.</p>
+            <div class="contact-grid">
+              <label>
+                <span>Name</span>
+                <input type="text" name="name" maxlength="120" autocomplete="name" required />
+              </label>
+              <label>
+                <span>Email</span>
+                <input type="email" name="email" maxlength="180" autocomplete="email" required />
+              </label>
+            </div>
+            <label>
+              <span>Message</span>
+              <textarea name="message" maxlength="1000" rows="3" placeholder="Role, company, or next step"></textarea>
+            </label>
+            <label class="bot-field" aria-hidden="true">
+              <span>Company website</span>
+              <input type="text" name="companyWebsite" tabindex="-1" autocomplete="off" />
+            </label>
+            <label class="consent-check">
+              <input type="checkbox" name="consent" required />
+              <span>I consent to storing these contact details for up to 90 days.</span>
+            </label>
+            <button class="button secondary" type="submit" data-track="contact-capture-submit">Send contact</button>
+            <p class="chat-status" data-contact-status role="status"></p>
+          </form>
+        </div>
+      </section>
+
+      <section class="section capability-band" id="skills">
+        <div>
+          <p class="section-kicker">Technical Surface Area</p>
+          <h2>Where I operate</h2>
+        </div>
+        <div class="capability-grid">
+          <div>
+            <h3>Leadership</h3>
+            <p>Engineering leadership, mentoring, code reviews, architecture reviews, Agile delivery.</p>
+          </div>
+          <div>
+            <h3>Platforms</h3>
+            <p>C#, .NET, Python, FastAPI, REST APIs, microservices, React, SQL.</p>
+          </div>
+          <div>
+            <h3>Data and AI</h3>
+            <p>ClickHouse, ETL, reporting platforms, OCR, LLM integration, document processing.</p>
+          </div>
+          <div>
+            <h3>Cloud and Delivery</h3>
+            <p>Docker, Kubernetes, Helm, Infrastructure as Code, GitLab CI/CD, AWS, Azure.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section contact-section" id="contact">
+        <div>
+          <p class="section-kicker">Contact</p>
+          <h2>Open to engineering leadership and platform delivery conversations.</h2>
+          <p>
+            Based in Oklahoma City. Open to remote roles, Texas, Oklahoma, and relocation for the
+            right opportunity.
+          </p>
+        </div>
+        <div class="contact-actions">
+          <a class="button primary" href="https://linkedin.com/in/rodrigue-compaore" rel="me noopener" data-track="contact-linkedin">LinkedIn</a>
+          <a class="button secondary" href="/api/download-resume" data-track="contact-resume-download">Download Resume PDF</a>
+          <a class="button secondary" href="resume.html" data-track="contact-resume">Public Resume</a>
+          <a class="button secondary" href="privacy.html" data-track="contact-privacy">Privacy</a>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="analytics.js" data-site-id="portfolio-public"></script>
+  </body>
+</html>

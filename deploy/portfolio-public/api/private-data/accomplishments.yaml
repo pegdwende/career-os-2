@@ -1,0 +1,23 @@
+accomplishments:
+  - text: Led engineering teams delivering enterprise software platforms from technical design through production release.
+    tags: [manager, leadership, delivery, agile]
+  - text: Mentored engineers through code reviews, architecture reviews, technical coaching, and collaborative design sessions.
+    tags: [manager, staff, mentoring, code_reviews]
+  - text: Partnered with product managers and stakeholders to translate ambiguous requirements into scoped, deliverable technical plans.
+    tags: [manager, product, scoping, leadership]
+  - text: Designed distributed backend services and REST APIs using C#, .NET, SQL, and asynchronous processing patterns.
+    tags: [senior, staff, backend, api, dotnet]
+  - text: Architected a configurable enterprise reporting platform supporting complex business reporting and ETL workflows.
+    tags: [staff, manager, reporting, etl, architecture]
+  - text: Designed and implemented a ClickHouse analytics platform to support high-volume reporting and analytical workloads.
+    tags: [staff, data, clickhouse, analytics, performance]
+  - text: Built AI-powered document processing workflows using OCR and large language models for structured extraction and reporting automation.
+    tags: [ai, python, staff, automation, reporting]
+  - text: Designed a secure Dropbox-like enterprise file platform supporting document storage, sharing, secure transfer, and background processing.
+    tags: [platform, backend, api, distributed, security]
+  - text: Implemented event-driven processing using RabbitMQ and Kafka to improve scalability and decouple backend workflows.
+    tags: [backend, rabbitmq, kafka, microservices, architecture]
+  - text: Established CI/CD pipelines and engineering practices that improved release consistency and reduced manual deployment effort.
+    tags: [devops, cicd, manager, senior]
+  - text: Supported production systems through monitoring, logging, performance tuning, incident response, and continuous improvement.
+    tags: [production, reliability, observability, senior, manager]

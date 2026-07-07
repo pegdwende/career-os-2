@@ -1,0 +1,198 @@
+{
+  "profile": {
+    "name": "Rodrigue Compaore",
+    "location": "Oklahoma City, OK",
+    "headline": "Software Engineering Manager | Technical Lead | Enterprise Platform Architect",
+    "preferences": [
+      "Remote roles",
+      "Texas",
+      "Oklahoma",
+      "Open to relocation for the right role"
+    ],
+    "summary": "Software engineering leader with 10+ years of experience designing, building, and leading enterprise software platforms using C#, .NET, Python, SQL, React, Docker, Kubernetes, Helm, RabbitMQ, Kafka, ClickHouse, REST APIs, AI/OCR, and cloud technologies."
+  },
+  "leadership": {
+    "direct_reports": 12,
+    "team_size": "12 engineers",
+    "focus": [
+      "Engineering leadership",
+      "Technical leadership",
+      "Mentoring",
+      "Code reviews",
+      "Architecture reviews",
+      "Agile delivery",
+      "Product collaboration",
+      "Stakeholder management",
+      "Production support",
+      "Incident response",
+      "Performance tuning"
+    ],
+    "budget_ownership": "Budget planning and prioritization for reporting and ETL solutions."
+  },
+  "experience": [
+    {
+      "company": "Paycom",
+      "title": "Senior Software Engineer / Technical Team Lead",
+      "dates": "2016-Present",
+      "location": "Oklahoma City, OK",
+      "scope": [
+        "Led engineering teams delivering enterprise software platforms from architecture through production.",
+        "Mentored engineers through code reviews, architecture reviews, technical coaching, and one-on-one support.",
+        "Partnered with product managers and stakeholders to define requirements, scope work, and deliver business-critical capabilities.",
+        "Supported production applications through monitoring, incident response, performance tuning, and operational improvements."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Enterprise Reporting Platform",
+      "technologies": ["C#", ".NET", "SQL", "Kafka"],
+      "summary": "Configurable reporting and ETL workflows for business-critical enterprise reporting.",
+      "proof_points": [
+        "Supported approximately 1,000 reports per day.",
+        "Improved extensibility through reusable reporting components.",
+        "Included stakeholder alignment, delivery planning, and production support."
+      ]
+    },
+    {
+      "name": "ClickHouse Analytics Platform",
+      "technologies": ["ClickHouse", "SQL", "ETL"],
+      "summary": "Analytics architecture for high-volume operational reporting and tenant-scale datasets.",
+      "proof_points": [
+        "Supported analytical workloads across approximately 100 tenants.",
+        "Focused on schema design, ingestion workflows, and query optimization.",
+        "Modernized reporting architecture for stronger analytical scalability."
+      ]
+    },
+    {
+      "name": "AI Reporting Platform",
+      "technologies": ["Python", "FastAPI", "OCR", "LLMs"],
+      "summary": "Document processing and structured extraction workflows using OCR and LLM technologies.",
+      "proof_points": [
+        "Designed extraction and validation workflows for approximately 1,000 files.",
+        "Reduced manual extraction effort through automation.",
+        "Led ambiguous technical discovery across AI, reporting, and backend systems."
+      ]
+    },
+    {
+      "name": "Enterprise File Platform",
+      "technologies": [".NET", "REST APIs", "SFTP", "RabbitMQ"],
+      "summary": "Secure file storage, sharing, transfer, and background processing workflows for enterprise users.",
+      "proof_points": [
+        "Improved file transfer workflows to be approximately 50% faster.",
+        "Supported secure enterprise integration workflows and on-demand transfers.",
+        "Used asynchronous processing and API design to improve reliability."
+      ]
+    }
+  ],
+  "skills": {
+    "languages": ["C#", "Python", "JavaScript", "TypeScript", "SQL"],
+    "backend": [".NET", "ASP.NET Core", "FastAPI", "REST APIs", "Microservices"],
+    "frontend": ["React", "HTML", "CSS"],
+    "data": ["SQL Server", "MySQL", "ClickHouse", "ETL", "Reporting Platforms"],
+    "messaging": ["RabbitMQ", "Kafka"],
+    "cloud_delivery": [
+      "Docker",
+      "Kubernetes",
+      "Helm",
+      "Infrastructure as Code",
+      "GitLab CI/CD",
+      "GitHub Actions",
+      "AWS",
+      "Azure"
+    ],
+    "ai": ["OCR", "LLM Integration", "AI Reporting", "Document Processing"]
+  },
+  "learning_style": {
+    "summary": "Rodrigue has a track record of picking up new technologies quickly across backend, frontend, data, cloud, DevOps, and AI work.",
+    "supporting_points": [
+      "He has worked across multiple stacks including C#, .NET, Python, FastAPI, React, SQL, ClickHouse, Kafka, RabbitMQ, Docker, Kubernetes, Helm, AWS, Azure, OCR, and LLM integration.",
+      "He practices and evaluates different technology stacks so he can ramp into new environments quickly.",
+      "When a technology is not listed in the public profile, recruiters should reach out so Rodrigue can confirm direct experience or explain related experience and a ramp-up plan."
+    ],
+    "recommended_response_for_unlisted_technology": "The public profile does not currently list direct experience with that specific technology. Rodrigue has demonstrated strong cross-stack learning ability and has been practicing different technology stacks, so it would be worth reaching out for confirmation and related examples."
+  },
+  "architecture_approach": {
+    "confidentiality_rule": "Discuss architecture at pattern and principle level only. Do not reveal proprietary architecture, internal services, real schemas, internal data flows, diagrams matching actual systems, or confidential implementation details.",
+    "principles": [
+      "Reliability and observability are part of delivery, not afterthoughts.",
+      "Reusable platform components should reduce repeated one-off work.",
+      "Asynchronous processing is useful for long-running workflows, integrations, and resilience.",
+      "Data and analytics systems require careful attention to ingestion, query patterns, tenant scale, and operational tuning.",
+      "AI workflows should include validation, confidence handling, and clear review paths.",
+      "Cloud delivery should be repeatable, observable, and recoverable through CI/CD, containers, Kubernetes, Helm, and environment discipline."
+    ],
+    "public_safe_scenarios": [
+      {
+        "name": "High-volume reporting",
+        "decision_framework": "Separate reusable report definition, execution, delivery, and observability concerns while balancing flexibility with supportability."
+      },
+      {
+        "name": "AI document processing",
+        "decision_framework": "Treat AI as a workflow component across ingestion, OCR, extraction, validation, review, and monitoring."
+      },
+      {
+        "name": "Secure file workflows",
+        "decision_framework": "Design around access control, API boundaries, asynchronous processing, auditability, and failure recovery."
+      },
+      {
+        "name": "Tenant-scale analytics",
+        "decision_framework": "Separate ingestion, storage layout, query patterns, and operational tuning decisions while balancing speed, freshness, isolation, and cost."
+      },
+      {
+        "name": "Cloud delivery",
+        "decision_framework": "Use CI/CD, containerization, Kubernetes, Helm, and environment discipline to reduce release risk."
+      }
+    ]
+  },
+  "skill_evidence": [
+    {
+      "keyword": "Kubernetes / Helm",
+      "evidence": "Cloud-native delivery experience with Docker, Kubernetes, Helm, Infrastructure as Code, CI/CD, AWS, Azure, and production ownership."
+    },
+    {
+      "keyword": "Engineering Manager",
+      "evidence": "Leadership of 12 direct reports through mentoring, code reviews, architecture reviews, one-on-ones, delivery planning, and stakeholder alignment."
+    },
+    {
+      "keyword": "Budget Ownership",
+      "evidence": "Budget planning and prioritization for reporting and ETL solutions."
+    },
+    {
+      "keyword": "ClickHouse / Analytics",
+      "evidence": "Analytics platform work across approximately 100 tenants with schema, ingestion, and query optimization focus."
+    },
+    {
+      "keyword": "AI / OCR / LLMs",
+      "evidence": "AI reporting workflows using OCR, LLM integration, validation, and structured extraction across approximately 1,000 files."
+    },
+    {
+      "keyword": "APIs / Async Systems",
+      "evidence": ".NET, REST APIs, SFTP, RabbitMQ, Kafka, secure file workflows, and background processing patterns."
+    }
+  ],
+  "why_me": [
+    "Rodrigue leads teams while staying close to architecture, code quality, delivery planning, and production ownership.",
+    "Rodrigue builds across data, AI, cloud, APIs, secure file workflows, reporting, analytics, Kubernetes, Helm, and CI/CD.",
+    "Rodrigue communicates tradeoffs at a public-safe architecture level while respecting NDA boundaries."
+  ],
+  "public_boundaries": [
+    "Do not discuss private recruiter notes.",
+    "Do not discuss target role match scoring.",
+    "Do not discuss interview prep notes.",
+    "Do not discuss missing information checklists.",
+    "Do not claim knowledge of confidential employer systems beyond the public project summaries.",
+    "Do not provide salary expectations or personal contact details not shown on the public site.",
+    "When asked about an unlisted technology, skill, or tool, do not answer with a blunt no. Clarify that it is not listed in the public profile, then mention Rodrigue's cross-stack learning ability and invite the recruiter to reach out for confirmation.",
+    "When asked about architecture specifics, answer only with public-safe patterns, principles, decision frameworks, and tradeoffs. Do not provide implementation details that could resemble a current or former employer's internal system."
+  ],
+  "suggested_questions": [
+    "What kind of engineering teams has Rodrigue led?",
+    "How strong is his Kubernetes and Helm experience?",
+    "What data platform work has he done?",
+    "What AI experience does he have?",
+    "What makes him a fit for engineering manager roles?",
+    "How does Rodrigue ramp up on new technology stacks?",
+    "How does Rodrigue approach architecture without exposing confidential details?"
+  ]
+}

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy | Rodrigue Compaore Portfolio</title>
+    <meta
+      name="description"
+      content="Privacy notes for Rodrigue Compaore's public portfolio, AI chat, contact form, and resume download tracking."
+    />
+    <meta name="robots" content="index,follow" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header" aria-label="Primary navigation">
+      <a class="brand" href="index.html" data-track="privacy-home">
+        <span class="brand-mark">RC</span>
+        <span>Rodrigue Compaore</span>
+      </a>
+      <nav class="nav-links" aria-label="Privacy navigation">
+        <a href="index.html#work" data-track="privacy-work">Work</a>
+        <a href="index.html#assistant" data-track="privacy-chat">AI Chat</a>
+        <a href="resume.html" data-track="privacy-resume">Resume</a>
+      </nav>
+    </header>
+
+    <main class="privacy-main">
+      <section class="privacy-hero">
+        <p class="section-kicker">Privacy</p>
+        <h1>Public portfolio privacy notes.</h1>
+        <p>
+          This site is designed to share public professional information while avoiding private
+          recruiter notes, interview prep, target-role scoring, internal architecture details, and
+          local file paths.
+        </p>
+      </section>
+
+      <section class="privacy-section">
+        <h2>What is public</h2>
+        <p>
+          The portfolio, public resume page, one-page resume PDF, skill evidence matrix, and
+          architecture judgment examples are public. Anything shown on those pages can be viewed,
+          copied, indexed, or saved by visitors and search engines.
+        </p>
+      </section>
+
+      <section class="privacy-section">
+        <h2>AI chat</h2>
+        <p>
+          The AI assistant answers from a public profile knowledge file only. It is instructed not to
+          answer from private recruiter notes, interview prep notes, missing information checklists,
+          target-role match scoring, salary assumptions, local file paths, hidden metadata, or
+          confidential employer details.
+        </p>
+        <p>
+          Chat requests are rate-limited by network address before any AI request is made. Raw chat
+          transcript storage is optional and happens only when the visitor checks the transcript
+          storage consent box.
+        </p>
+      </section>
+
+      <section class="privacy-section">
+        <h2>Contact form</h2>
+        <p>
+          Recruiter contact details are stored only when the contact consent box is checked. The form
+          includes a hidden spam-trap field to reject common automated bot submissions.
+        </p>
+      </section>
+
+      <section class="privacy-section">
+        <h2>Resume downloads</h2>
+        <p>
+          Resume downloads are served through a rate-limited endpoint. Download events store a salted
+          IP hash for abuse prevention and aggregate counting; raw IP addresses are not intentionally
+          stored by the application for resume downloads.
+        </p>
+      </section>
+
+      <section class="privacy-section">
+        <h2>Retention</h2>
+        <ul>
+          <li>Consented chat transcripts: up to 90 days.</li>
+          <li>Consented contact submissions: up to 90 days.</li>
+          <li>Resume download event records: up to 90 days.</li>
+          <li>Rate-limit counters: short-lived windows based on the configured limit period.</li>
+        </ul>
+      </section>
+
+      <section class="privacy-section">
+        <h2>Deployment notes</h2>
+        <p>
+          OpenAI and Redis keys must be stored only as Vercel environment variables. They should not
+          be committed to the repository or exposed in browser JavaScript.
+        </p>
+      </section>
+    </main>
+
+    <script src="analytics.js" data-site-id="portfolio-public"></script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+metrics:
+  team_size: 12 engineers
+  years_experience: 10+
+  direct_reports: 12
+  budget_ownership: reporting and ETL solutions
+  hiring_interviews: 20+
+  performance_reviews: "yearly and quarterly"
+  reporting_scale: 1000 of reports per day
+  clickhouse_scale: 100 tenants
+  ai_processing_volume: 1000 files
+  deployment_improvement: on-premises Kubernetes, Helm, AWS, Render, Fly.io
+  file_transfer_improvement: 50% faster and on demand

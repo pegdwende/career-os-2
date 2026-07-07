@@ -1,0 +1,61 @@
+projects:
+  - name: Enterprise Reporting Platform
+    type: work
+    tags: [reporting, etl, sql, architecture, leadership, platform, backend, manager, staff]
+    summary: Designed and led development of a configurable enterprise reporting platform supporting complex business reporting workflows.
+    technologies: [C#, .NET, SQL, MySQL, RabbitMQ, Kafka, Docker]
+    impact:
+      - Supported complex enterprise reporting requirements.
+      - Improved reporting extensibility and maintainability.
+    resume_angles:
+      engineering_manager: Emphasize team leadership, product partnership, delivery, and production ownership.
+      staff_engineer: Emphasize architecture, scalability, distributed systems, and technical influence.
+      senior_engineer: Emphasize implementation, APIs, SQL, backend services, and performance.
+
+  - name: ClickHouse Analytics Platform
+    type: work
+    tags: [clickhouse, analytics, data, reporting, performance, architecture, staff, backend]
+    summary: Designed and implemented a ClickHouse-based analytics platform for high-volume reporting workloads.
+    technologies: [ClickHouse, SQL, C#, .NET, ETL]
+    impact:
+      - Improved analytical scalability for reporting workloads.
+      - Supported large operational datasets.
+    resume_angles:
+      engineering_manager: Emphasize strategic platform modernization and business reporting impact.
+      staff_engineer: Emphasize schema design, ingestion pipelines, query optimization, and architecture.
+      senior_engineer: Emphasize hands-on implementation and performance tuning.
+
+  - name: AI Reporting Platform
+    type: work
+    tags: [ai, ocr, llm, python, reporting, automation, data, architecture]
+    summary: Built an AI-powered reporting platform using OCR and LLM technologies to automate document processing and structured data extraction.
+    technologies: [Python, FastAPI, OCR, LLMs, JSON, .NET]
+    impact:
+      - Automated document processing workflows.
+      - Reduced manual extraction effort.
+    resume_angles:
+      engineering_manager: Emphasize innovation, product impact, and leading ambiguous technical discovery.
+      staff_engineer: Emphasize AI architecture, validation pipelines, and system design.
+      senior_engineer: Emphasize implementation, APIs, extraction logic, and backend integration.
+
+  - name: Enterprise File Platform
+    type: work
+    tags: [file_platform, dropbox, storage, api, security, backend, distributed, architecture]
+    summary: Designed a secure Dropbox-like enterprise file platform for document storage, sharing, transfer, and background processing.
+    technologies: [C#, .NET, REST APIs, SFTP, Object Storage, RabbitMQ, Docker]
+    impact:
+      - Supported secure enterprise file workflows.
+      - Improved file transfer automation and reliability.
+    resume_angles:
+      engineering_manager: Emphasize cross-functional delivery and secure enterprise platform ownership.
+      staff_engineer: Emphasize distributed architecture, async processing, and API design.
+      senior_engineer: Emphasize backend implementation, file workflows, and API development.
+
+  - name: SFTP Secure File Transfer Service
+    type: work
+    tags: [sftp, integration, file_transfer, security, api, backend]
+    summary: Built secure file transfer services and APIs supporting enterprise integration workflows.
+    technologies: [C#, .NET, SFTP, APIs, Background Processing]
+    impact:
+      - Reduced manual file transfer effort.
+      - Improved reliability of secure transfer workflows.

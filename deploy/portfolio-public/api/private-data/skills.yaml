@@ -1,0 +1,50 @@
+skills:
+  leadership:
+    - Engineering Leadership
+    - Technical Leadership
+    - Mentoring
+    - Code Reviews
+    - Architecture Reviews
+    - Agile Delivery
+    - Sprint Planning
+    - Product Collaboration
+    - Stakeholder Management
+  languages:
+    - C#
+    - Python
+    - JavaScript
+    - TypeScript
+    - SQL
+  backend:
+    - .NET
+    - ASP.NET Core
+    - FastAPI
+    - REST APIs
+    - Microservices
+  frontend:
+    - React
+    - HTML
+    - CSS
+  data:
+    - SQL Server
+    - MySQL
+    - ClickHouse
+    - ETL
+    - Reporting Platforms
+  messaging:
+    - RabbitMQ
+    - Kafka
+  devops_cloud:
+    - Docker
+    - Kubernetes
+    - Helm
+    - Infrastructure as Code
+    - GitLab CI/CD
+    - GitHub Actions
+    - AWS
+    - Azure
+  ai:
+    - OCR
+    - LLM Integration
+    - AI Reporting
+    - Document Processing

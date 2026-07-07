@@ -1,0 +1,41 @@
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+
+# Dependencies and build/cache output
+node_modules/
+.vercel/
+.next/
+dist/
+build/
+coverage/
+.cache/
+.turbo/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+Thumbs.db
+.DS_Store
+
+# Private source material and generated job-application artifacts.
+# Vercel should deploy only deploy/portfolio-public as the project root.
+data/
+docs/
+interview/
+job_descriptions/
+outputs/
+projects/
+prompts/
+templates/
+
+# Local agent/runtime state
+.agents/
+.codex/
+
+# Keep the deployable public package tracked.
+!deploy/
+!deploy/portfolio-public/
+!deploy/portfolio-public/**

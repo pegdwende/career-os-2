@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin | Resume Tailor</title>
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="admin-main">
+      <section class="admin-login" data-admin-login>
+        <p class="section-kicker">Private Admin</p>
+        <h1>Resume Tailor</h1>
+        <p>Log in with your account, or use the owner passcode for private admin access.</p>
+        <form data-admin-login-form>
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" autocomplete="username" />
+          </label>
+          <label>
+            <span>Password</span>
+            <input type="password" name="password" autocomplete="current-password" />
+          </label>
+          <label>
+            <span>Owner passcode</span>
+            <input type="password" name="passcode" autocomplete="off" />
+          </label>
+          <button class="button primary" type="submit">Unlock</button>
+          <p class="chat-status" data-admin-login-status role="status"></p>
+        </form>
+        <form data-admin-register-form hidden>
+          <label>
+            <span>Invite code</span>
+            <input type="text" name="inviteToken" autocomplete="off" required />
+          </label>
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" autocomplete="username" required />
+          </label>
+          <label>
+            <span>Password</span>
+            <input type="password" name="password" autocomplete="new-password" minlength="12" required />
+          </label>
+          <button class="button primary" type="submit">Create Account</button>
+          <p class="chat-status" data-admin-register-status role="status"></p>
+        </form>
+      </section>
+
+      <section class="admin-app" data-admin-app hidden>
+        <div class="admin-heading">
+          <div>
+            <p class="section-kicker">Private Admin</p>
+            <h1>Tailor a resume package.</h1>
+          </div>
+          <p>
+            Uses private resume data and the existing tailoring prompt server-side. The generated
+            package is editable here and downloadable as Markdown.
+          </p>
+        </div>
+
+        <section class="job-tracker" data-owner-tools hidden aria-label="Owner invite tools">
+          <div class="tracker-heading">
+            <div>
+              <p class="section-kicker">Owner Tools</p>
+              <h2>Invite a trusted friend.</h2>
+              <p>Invite links expire after seven days. Each account gets a separate encrypted job tracker.</p>
+            </div>
+            <div class="admin-actions">
+              <button class="button secondary" type="button" data-create-invite>Create Invite Link</button>
+            </div>
+          </div>
+          <label>
+            <span>Invite link</span>
+            <input type="text" data-invite-output readonly />
+          </label>
+          <p class="chat-status" data-invite-status role="status"></p>
+        </section>
+
+        <form class="admin-form" data-tailor-form>
+          <div class="admin-fields">
+            <label>
+              <span>Company</span>
+              <input type="text" name="company" maxlength="120" placeholder="Allstate" />
+            </label>
+            <label>
+              <span>Role</span>
+              <input type="text" name="role" maxlength="160" placeholder="Software Engineering Manager" />
+            </label>
+          </div>
+          <label>
+            <span>Job description</span>
+            <textarea
+              name="jobDescription"
+              rows="14"
+              maxlength="24000"
+              placeholder="Paste the full job description here..."
+              required
+            ></textarea>
+          </label>
+          <div class="admin-actions">
+            <button class="button primary" type="submit" data-owner-only>Generate</button>
+            <button class="button secondary" type="button" data-download-markdown data-owner-only disabled>
+              Download Markdown
+            </button>
+            <button class="button secondary" type="button" data-clear-output data-owner-only>Clear</button>
+          </div>
+          <p class="chat-status" data-tailor-status role="status"></p>
+        </form>
+
+        <section class="job-tracker" aria-label="Job application tracker">
+          <div class="tracker-heading">
+            <div>
+              <p class="section-kicker">Application Tracker</p>
+              <h2>Pipeline, notes, and interview prep.</h2>
+              <p>Saved server-side in an encrypted database when configured, with local JSON export as backup.</p>
+            </div>
+            <div class="admin-actions">
+              <button class="button secondary" type="button" data-save-job>Save Job</button>
+              <button class="button secondary" type="button" data-export-jobs>Export Jobs JSON</button>
+              <label class="button secondary import-button">
+                Import Jobs JSON
+                <input type="file" data-import-jobs accept="application/json" />
+              </label>
+            </div>
+          </div>
+
+          <div class="tracker-grid">
+            <aside class="job-list-panel">
+              <label>
+                <span>Status filter</span>
+                <select data-status-filter>
+                  <option value="all">All</option>
+                  <option value="Saved">Saved</option>
+                  <option value="Tailored">Tailored</option>
+                  <option value="Applied">Applied</option>
+                  <option value="Recruiter Screen">Recruiter Screen</option>
+                  <option value="Technical Screen">Technical Screen</option>
+                  <option value="Hiring Manager">Hiring Manager</option>
+                  <option value="Onsite / Final">Onsite / Final</option>
+                  <option value="Offer">Offer</option>
+                  <option value="Rejected">Rejected</option>
+                  <option value="Archived">Archived</option>
+                </select>
+              </label>
+              <div class="job-list" data-job-list></div>
+            </aside>
+
+            <section class="job-detail">
+              <div class="admin-fields">
+                <label>
+                  <span>Status</span>
+                  <select data-job-status>
+                    <option>Saved</option>
+                    <option>Tailored</option>
+                    <option>Applied</option>
+                    <option>Recruiter Screen</option>
+                    <option>Technical Screen</option>
+                    <option>Hiring Manager</option>
+                    <option>Onsite / Final</option>
+                    <option>Offer</option>
+                    <option>Rejected</option>
+                    <option>Archived</option>
+                  </select>
+                </label>
+                <label>
+                  <span>Job URL</span>
+                  <input type="url" data-job-url placeholder="https://..." />
+                </label>
+                <label>
+                  <span>Date applied</span>
+                  <input type="date" data-date-applied />
+                </label>
+                <label>
+                  <span>Follow-up date</span>
+                  <input type="date" data-follow-up-date />
+                </label>
+                <label>
+                  <span>Recruiter / contact</span>
+                  <input type="text" data-recruiter-name maxlength="160" />
+                </label>
+                <label>
+                  <span>Recruiter email or LinkedIn</span>
+                  <input type="text" data-recruiter-contact maxlength="240" />
+                </label>
+              </div>
+
+              <label>
+                <span>Compensation / remote / location notes</span>
+                <textarea data-comp-notes rows="3" placeholder="Salary range, remote policy, relocation, benefits, etc."></textarea>
+              </label>
+              <label>
+                <span>Application and interview notes</span>
+                <textarea data-job-notes rows="5" placeholder="Call notes, follow-up details, concerns, next steps..."></textarea>
+              </label>
+              <label>
+                <span>Company / interview research notes</span>
+                <textarea
+                  data-research-sources
+                  rows="5"
+                  placeholder="Paste company notes, recruiter details, interview reports, coding challenge notes, or links you want summarized..."
+                ></textarea>
+              </label>
+              <div class="admin-actions">
+                <button class="button primary" type="button" data-generate-research>
+                  Generate Company Research
+                </button>
+                <button class="button primary" type="button" data-generate-prep data-owner-only>
+                  Generate Interview Prep
+                </button>
+                <button class="button secondary" type="button" data-download-job-package>Download Selected Job Markdown</button>
+                <button class="button secondary" type="button" data-delete-job>Delete Job</button>
+              </div>
+              <p class="chat-status" data-tracker-status role="status"></p>
+            </section>
+          </div>
+        </section>
+
+        <section class="admin-output" data-owner-only aria-label="Generated package">
+          <label>
+            <span>Editable generated package</span>
+            <textarea data-tailor-output rows="28" placeholder="Generated resume package will appear here."></textarea>
+          </label>
+        </section>
+      </section>
+    </main>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

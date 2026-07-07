@@ -1,0 +1,29 @@
+roles:
+  - company: Paycom
+    title: Senior Software Engineer / Technical Team Lead
+    start_date: 2016
+    end_date: Present
+    location: Oklahoma City, OK
+    team_size: 12 engineers
+    direct_reports: 12
+    responsibilities:
+      - Led engineering teams delivering enterprise software platforms from architecture through production.
+      - Mentored engineers through code reviews, architecture reviews, technical coaching, and one-on-one support.
+      - Partnered with product managers and stakeholders to define requirements, scope work, and deliver business-critical capabilities.
+      - Owned budget planning and prioritization for reporting and ETL solutions.
+      - Supported production applications through monitoring, incident response, performance tuning, and operational improvements.
+    technologies:
+      - C#
+      - .NET
+      - Python
+      - React
+      - SQL
+      - ClickHouse
+      - RabbitMQ
+      - Kafka
+      - Docker
+      - Kubernetes
+      - Helm
+      - GitLab CI/CD
+      - AWS
+      - Azure

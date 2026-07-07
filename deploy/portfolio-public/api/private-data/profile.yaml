@@ -1,0 +1,24 @@
+name: Rodrigue Compaore
+location: Oklahoma City, OK
+work_preferences:
+  - Remote
+  - Texas
+  - Oklahoma
+  - Open to relocation for the right role
+headline_options:
+  engineering_manager: Software Engineering Manager | Technical Lead | Enterprise Platform Architect
+  staff_engineer: Staff Software Engineer | Distributed Systems | Data & AI Platforms
+  senior_engineer: Senior Software Engineer | .NET | Python | React | Cloud-Native Systems
+summary_base: >
+  Software engineering leader with 10+ years of experience designing, building, and leading enterprise software platforms using C#, .NET, Python, SQL, React, Docker, Kubernetes, RabbitMQ, Kafka, ClickHouse, REST APIs, AI/OCR, and cloud technologies. Experienced leading teams, mentoring engineers, partnering with product stakeholders, and delivering scalable business-critical systems.
+target_roles:
+  - Software Engineering Manager
+  - Software Team Lead
+  - Staff Software Engineer
+  - Senior Software Engineer
+  - Platform Engineer
+  - Backend Engineer
+  - Solutions Architect
+certifications:
+  - name: AWS Certified Solutions Architect Associate
+    status: In Progress
