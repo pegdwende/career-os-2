@@ -35,48 +35,38 @@ function getRedisConfig() {
 }
 
 async function redisCommand(config, command) {
+  const results = await redisPipeline(config, [command]);
+  return results[0]?.result;
+}
+
+async function incrementWithTtl(config, key, ttlSeconds) {
+  const results = await redisPipeline(config, [
+    ["INCR", key],
+    ["EXPIRE", key, ttlSeconds]
+  ]);
+  return Number(results[0]?.result || 0);
+}
+
+async function redisPipeline(config, commands) {
   const response = await fetch(`${config.url}/pipeline`, {
     method: "POST",
     headers: {
       authorization: `Bearer ${config.token}`,
       "content-type": "application/json"
     },
-    body: JSON.stringify([command])
+    body: JSON.stringify(commands)
   });
 
   if (!response.ok) {
     throw new Error(`Redis command failed with ${response.status}`);
   }
 
-  const [result] = await response.json();
-  if (result?.error) {
-    throw new Error(result.error);
-  }
-  return result?.result;
-}
-
-async function incrementWithTtl(config, key, ttlSeconds) {
-  const response = await fetch(`${config.url}/pipeline`, {
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${config.token}`,
-      "content-type": "application/json"
-    },
-    body: JSON.stringify([
-      ["INCR", key],
-      ["EXPIRE", key, ttlSeconds]
-    ])
-  });
-
-  if (!response.ok) {
-    throw new Error(`Redis rate limit failed with ${response.status}`);
-  }
-
-  const results = await response.json();
+  const payload = await response.json();
+  const results = Array.isArray(payload) ? payload : payload?.result ? [payload] : [];
   if (results.some((item) => item?.error)) {
-    throw new Error("Redis rate limit command failed");
+    throw new Error(results.find((item) => item?.error)?.error || "Redis command failed");
   }
-  return Number(results[0]?.result || 0);
+  return results;
 }
 
 async function enforceRateLimits(config, ip, page) {
@@ -233,8 +223,10 @@ module.exports = async function handler(req, res) {
     const prompt = buildPrompt(knowledge, message, history);
     const answer = await callOpenAi(prompt);
 
-    await redisCommand(redis, ["INCR", `chat:events:message:${todayKey()}`]);
-    await storeTranscript(redis, body, answer, ip);
+    await Promise.allSettled([
+      redisCommand(redis, ["INCR", `chat:events:message:${todayKey()}`]),
+      storeTranscript(redis, body, answer, ip)
+    ]);
 
     return json(res, 200, { answer });
   } catch (error) {
