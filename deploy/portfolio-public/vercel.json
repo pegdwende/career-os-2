@@ -2,22 +2,8 @@
   "cleanUrls": true,
   "functions": {
     "api/*.js": {
-      "maxDuration": 15
-    },
-    "api/admin-tailor.js": {
       "maxDuration": 30,
-      "includeFiles": "{api/private-data/**,api/private-prompts/**,api/private-templates/**}"
-    },
-    "api/admin-prep.js": {
-      "maxDuration": 30,
-      "includeFiles": "api/private-data/**"
-    },
-    "api/admin-research.js": {
-      "maxDuration": 30
-    },
-    "api/download-resume.js": {
-      "maxDuration": 10,
-      "includeFiles": "api/assets/rodrigue_compaore_public_resume.pdf"
+      "includeFiles": "api/private-data/**,api/private-prompts/**,api/private-templates/**,api/assets/**"
     }
   },
   "headers": [
