@@ -1076,6 +1076,418 @@ h2 {
   background: #fff;
 }
 
+/* Public page refresh: keep the same interactions, reduce visual density. */
+.public-page {
+  --page: #fbfcfc;
+  --line: #e6ebef;
+  --muted: #66717d;
+  background: var(--page);
+}
+
+.public-page .site-header {
+  min-height: 64px;
+  padding: 10px clamp(20px, 5vw, 64px);
+  background: rgba(251, 252, 252, 0.88);
+}
+
+.public-page .brand {
+  font-weight: 750;
+}
+
+.public-page .brand-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+}
+
+.public-page .nav-links {
+  gap: 18px;
+  font-size: 13px;
+}
+
+.public-page .hero,
+.public-page .section,
+.public-page .metrics {
+  max-width: 1180px;
+  margin-inline: auto;
+}
+
+.public-page .hero {
+  grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.8fr);
+  gap: clamp(32px, 6vw, 76px);
+  min-height: auto;
+  padding: clamp(56px, 9vw, 104px) clamp(20px, 5vw, 64px) 36px;
+}
+
+.public-page .hero-copy {
+  max-width: 760px;
+}
+
+.public-page .eyebrow,
+.public-page .section-kicker {
+  margin-bottom: 10px;
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.public-page h1 {
+  max-width: 13ch;
+  font-size: clamp(42px, 7vw, 76px);
+  line-height: 1.02;
+}
+
+.public-page h2 {
+  max-width: 680px;
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.12;
+}
+
+.public-page h3 {
+  line-height: 1.2;
+}
+
+.public-page .hero-summary {
+  max-width: 56ch;
+  margin-top: 22px;
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.public-page .button,
+.public-page .card-action,
+.public-page .filter,
+.public-page .panel-grid button,
+.public-page .principle,
+.public-page .chat-suggestions button {
+  border-radius: 7px;
+  font-weight: 720;
+}
+
+.public-page .button.primary {
+  background: #173f5f;
+  border-color: #173f5f;
+}
+
+.public-page .hero-stage {
+  min-height: 420px;
+  border: 0;
+  box-shadow: none;
+  background: #eef3f5;
+}
+
+.public-page .hero-stage img {
+  min-height: 420px;
+  opacity: 0.94;
+}
+
+.public-page .system-panel {
+  right: 16px;
+  bottom: 16px;
+  width: min(320px, calc(100% - 32px));
+  border-color: rgba(217, 225, 231, 0.9);
+  box-shadow: 0 14px 30px rgba(23, 32, 42, 0.12);
+}
+
+.public-page .metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  border: 0;
+  background: transparent;
+  padding-inline: clamp(20px, 5vw, 64px);
+}
+
+.public-page .metrics div {
+  min-height: auto;
+  padding: 0 0 18px;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+}
+
+.public-page .metrics strong {
+  color: var(--ink);
+  font-size: clamp(24px, 3vw, 34px);
+}
+
+.public-page .metrics span {
+  max-width: 22ch;
+  font-size: 14px;
+}
+
+.public-page .section {
+  padding: clamp(56px, 8vw, 86px) clamp(20px, 5vw, 64px);
+}
+
+.public-page .intro-grid,
+.public-page .section-heading,
+.public-page .contact-section,
+.public-page .architecture-heading,
+.public-page .why-section,
+.public-page .assistant-heading {
+  grid-template-columns: minmax(220px, 0.42fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 64px);
+}
+
+.public-page .leadership-list {
+  max-width: 700px;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.public-page .leadership-list ul {
+  display: grid;
+  gap: 10px;
+  margin-top: 22px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.public-page .leadership-list li {
+  margin: 0;
+  padding-left: 18px;
+  border-left: 2px solid var(--line);
+}
+
+.public-page .filters {
+  gap: 6px;
+}
+
+.public-page .filter {
+  min-height: 34px;
+  padding-inline: 12px;
+  background: transparent;
+}
+
+.public-page .filter.active,
+.public-page .filter:hover {
+  background: #eef5f2;
+}
+
+.public-page .project-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.public-page .project-card,
+.public-page .evidence-grid article,
+.public-page .why-grid article,
+.public-page .capability-grid div {
+  min-height: auto;
+  padding: 22px;
+  border-color: var(--line);
+  background: #fff;
+  box-shadow: none;
+}
+
+.public-page .project-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.public-page .project-topline {
+  display: block;
+  font-size: 12px;
+}
+
+.public-page .project-topline span {
+  display: block;
+}
+
+.public-page .project-topline span + span {
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.public-page .project-card h3,
+.public-page .capability-grid h3,
+.public-page .signal-board h3,
+.public-page .resume-section h2 {
+  margin-top: 18px;
+  font-size: 21px;
+}
+
+.public-page .project-card p,
+.public-page .project-card li,
+.public-page .evidence-grid p,
+.public-page .why-grid p,
+.public-page .capability-grid p {
+  font-size: 15px;
+  line-height: 1.62;
+}
+
+.public-page .card-action {
+  width: auto;
+  align-self: flex-start;
+  min-height: 38px;
+  margin-top: 18px;
+  background: transparent;
+}
+
+.public-page .signal-board {
+  border: 0;
+  border-left: 2px solid var(--line);
+  border-radius: 0;
+  padding: 8px 0 8px 22px;
+  background: transparent;
+}
+
+.public-page .architecture-section,
+.public-page .assistant-section,
+.public-page .evidence-section,
+.public-page .why-section,
+.public-page .capability-band {
+  border-top: 1px solid var(--line);
+  background: transparent;
+}
+
+.public-page .architecture-grid {
+  grid-template-columns: minmax(200px, 0.32fr) minmax(0, 1fr);
+  gap: 16px;
+}
+
+.public-page .principle {
+  min-height: 42px;
+  background: transparent;
+}
+
+.public-page .principle.active,
+.public-page .principle:hover {
+  background: #173f5f;
+}
+
+.public-page .architecture-panel {
+  min-height: auto;
+  padding: 24px;
+  box-shadow: none;
+}
+
+.public-page .architecture-panel dl div {
+  padding: 0 0 14px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+}
+
+.public-page .evidence-grid,
+.public-page .capability-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.public-page .evidence-grid span {
+  min-height: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--blue);
+}
+
+.public-page .why-grid {
+  gap: 12px;
+}
+
+.public-page .assistant-heading p,
+.public-page .architecture-heading p,
+.public-page .evidence-intro {
+  max-width: 680px;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.public-page .chat-shell {
+  max-width: 980px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.public-page .chat-suggestions {
+  padding: 16px;
+  background: #fff;
+}
+
+.public-page .chat-log {
+  max-height: 420px;
+  background: #fbfcfc;
+}
+
+.public-page .chat-message {
+  max-width: min(720px, 88%);
+  box-shadow: none;
+}
+
+.public-page .chat-form,
+.public-page .contact-capture {
+  background: #fff;
+}
+
+.public-page .contact-section {
+  border-top: 1px solid var(--line);
+}
+
+.public-page .contact-actions {
+  justify-content: flex-start;
+}
+
+@media (max-width: 980px) {
+  .public-page .hero,
+  .public-page .intro-grid,
+  .public-page .section-heading,
+  .public-page .contact-section,
+  .public-page .architecture-heading,
+  .public-page .architecture-grid,
+  .public-page .why-section,
+  .public-page .assistant-heading {
+    grid-template-columns: 1fr;
+  }
+
+  .public-page .hero-stage,
+  .public-page .hero-stage img {
+    min-height: 360px;
+  }
+
+  .public-page .metrics,
+  .public-page .project-grid,
+  .public-page .evidence-grid,
+  .public-page .capability-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 680px) {
+  .public-page .site-header {
+    padding-inline: 18px;
+  }
+
+  .public-page .hero {
+    padding-top: 36px;
+  }
+
+  .public-page .metrics,
+  .public-page .project-grid,
+  .public-page .evidence-grid,
+  .public-page .capability-grid,
+  .public-page .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .public-page .metrics div {
+    padding-bottom: 14px;
+  }
+
+  .public-page .system-panel {
+    position: static;
+    width: auto;
+    margin: -8px 12px 12px;
+  }
+
+  .public-page .chat-message {
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 980px) {
   .site-header {
     padding-inline: 28px;

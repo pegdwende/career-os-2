@@ -90,7 +90,7 @@ async function enforceRateLimits(config, ip, page) {
 }
 
 function loadKnowledge() {
-  const file = path.join(process.cwd(), "knowledge", "public-profile.json");
+  const file = path.join(__dirname, "..", "knowledge", "public-profile.json");
   return JSON.parse(fs.readFileSync(file, "utf8"));
 }
 
@@ -128,7 +128,7 @@ async function callOpenAi(messages) {
     throw new Error("OPENAI_API_KEY is not configured");
   }
 
-  const model = process.env.OPENAI_MODEL || "gpt-4.1-mini";
+  const model = process.env.OPENAI_MODEL || process.env.ADMIN_OPENAI_MODEL || "gpt-4.1-mini";
   const response = await fetch("https://api.openai.com/v1/responses", {
     method: "POST",
     headers: {
@@ -146,7 +146,7 @@ async function callOpenAi(messages) {
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) {
     const message = payload?.error?.message || `OpenAI request failed with ${response.status}`;
-    throw new Error(message);
+    throw new Error(`OpenAI error using model "${model}": ${message}`);
   }
 
   const outputText = payload.output_text;
@@ -230,6 +230,10 @@ module.exports = async function handler(req, res) {
 
     return json(res, 200, { answer });
   } catch (error) {
+    console.error("chat request failed", {
+      message: error.message,
+      stack: error.stack
+    });
     try {
       await redisCommand(redis, ["INCR", `chat:events:error:${todayKey()}`]);
     } catch {}

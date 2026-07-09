@@ -10,22 +10,22 @@ const architectureProof = document.querySelector("#architecture-proof");
 
 const signals = {
   leadership: {
-    title: "Leadership Signal",
+    title: "Leadership",
     copy:
       "Team execution matters as much as architecture: mentoring, code review, delivery planning, product partnership, and production ownership all stay connected."
   },
   platform: {
-    title: "Platform Signal",
+    title: "Platform work",
     copy:
       "The common thread is durable platform work: APIs, asynchronous processing, CI/CD, Kubernetes, Helm, observability, and operational support."
   },
   data: {
-    title: "Data Signal",
+    title: "Data systems",
     copy:
       "Reporting, ETL, ClickHouse, SQL tuning, and tenant-scale analytics work show the ability to move from operational data to reliable business insight."
   },
   ai: {
-    title: "AI Signal",
+    title: "Document automation",
     copy:
       "AI work is framed as production workflow design: OCR, LLM extraction, validation, APIs, and practical automation around business documents."
   },

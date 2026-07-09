@@ -9,6 +9,7 @@ const handlers = {
   register: require("../server/admin-api/admin-register"),
   research: require("../server/admin-api/admin-research"),
   tailor: require("../server/admin-api/admin-tailor"),
+  "docx-zip": require("../server/admin-api/admin-docx-zip"),
   "web-research": require("../server/admin-api/admin-web-research")
 };
 
@@ -28,5 +29,14 @@ module.exports = async function handler(req, res) {
     return json(res, 404, { error: "Admin action not found." });
   }
 
-  return target(req, res);
+  try {
+    return await target(req, res);
+  } catch (error) {
+    console.error("admin request failed", {
+      action,
+      message: error.message,
+      stack: error.stack
+    });
+    return json(res, 500, { error: "Admin request failed. Check Vercel function logs." });
+  }
 };

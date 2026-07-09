@@ -28,6 +28,7 @@ const tailorStatus = document.querySelector("[data-tailor-status]");
 const trackerStatus = document.querySelector("[data-tracker-status]");
 const output = document.querySelector("[data-tailor-output]");
 const downloadButton = document.querySelector("[data-download-markdown]");
+const downloadDocxZipButton = document.querySelector("[data-download-docx-zip]");
 const clearButton = document.querySelector("[data-clear-output]");
 const saveJobButton = document.querySelector("[data-save-job]");
 const exportJobsButton = document.querySelector("[data-export-jobs]");
@@ -49,6 +50,7 @@ const generateResearchButton = document.querySelector("[data-generate-research]"
 const generatePrepButton = document.querySelector("[data-generate-prep]");
 const downloadJobButton = document.querySelector("[data-download-job-package]");
 const downloadFullPackageButton = document.querySelector("[data-download-full-package]");
+const downloadJobDocxZipButton = document.querySelector("[data-download-job-docx-zip]");
 const deleteJobButton = document.querySelector("[data-delete-job]");
 
 const STORAGE_PREFIX = "career_os_admin_jobs_v1";
@@ -238,6 +240,7 @@ function fillJobDetail(job) {
   setTailorFormValues(job);
   if (output) output.value = job.generatedPackage || "";
   if (downloadButton) downloadButton.disabled = !output?.value.trim();
+  if (downloadDocxZipButton) downloadDocxZipButton.disabled = !output?.value.trim();
   if (jobStatus) jobStatus.value = job.status || "Saved";
   if (jobUrl) jobUrl.value = job.jobUrl || "";
   if (dateApplied) dateApplied.value = job.dateApplied || "";
@@ -352,6 +355,16 @@ function downloadFile(filename, text, type = "text/markdown;charset=utf-8") {
   URL.revokeObjectURL(link.href);
 }
 
+function downloadBlob(filename, blob) {
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(link.href);
+}
+
 function safeSlug(value) {
   return String(value || "job")
     .toLowerCase()
@@ -432,6 +445,41 @@ function downloadMarkdown() {
   const stamp = new Date().toISOString().slice(0, 10);
   const prefix = current ? `${safeSlug(current.company)}_${safeSlug(current.role)}` : "tailored_resume_package";
   downloadFile(`${prefix}_${stamp}.md`, text);
+}
+
+async function downloadWordDocsZip(markdown, job, statusNode = tailorStatus) {
+  const text = String(markdown || "").trim();
+  if (!text) {
+    setText(statusNode, "Generate or select a package before downloading Word docs.");
+    return;
+  }
+
+  const stamp = new Date().toISOString().slice(0, 10);
+  const prefix = job ? `${safeSlug(job.company)}_${safeSlug(job.role)}` : "tailored_resume_package";
+  setText(statusNode, "Building Word docs zip...");
+
+  try {
+    const response = await fetch("/api/admin?action=docx-zip", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        company: job?.company || "",
+        role: job?.role || "",
+        markdown: text
+      })
+    });
+
+    if (!response.ok) {
+      const payload = await response.json().catch(() => ({}));
+      throw new Error(payload.error || "Word docs export failed.");
+    }
+
+    const blob = await response.blob();
+    downloadBlob(`${prefix}_${stamp}_word_docs.zip`, blob);
+    setText(statusNode, "Word docs zip downloaded.");
+  } catch (error) {
+    setText(statusNode, error.message || "Word docs export failed.");
+  }
 }
 
 async function checkSession() {
@@ -537,6 +585,7 @@ if (tailorForm) {
       if (!response.ok) throw new Error(payload.error || "Generation failed.");
       if (output) output.value = payload.markdown || "";
       if (downloadButton) downloadButton.disabled = !output?.value.trim();
+      if (downloadDocxZipButton) downloadDocxZipButton.disabled = !output?.value.trim();
       saveCurrentJob("Tailored");
       setText(tailorStatus, "Generated and saved to selected job. Review and edit before applying.");
     } catch (error) {
@@ -547,6 +596,11 @@ if (tailorForm) {
 
 if (saveJobButton) saveJobButton.addEventListener("click", () => saveCurrentJob());
 if (downloadButton) downloadButton.addEventListener("click", downloadMarkdown);
+if (downloadDocxZipButton) {
+  downloadDocxZipButton.addEventListener("click", () => {
+    downloadWordDocsZip(output?.value || "", selectedJob(), tailorStatus);
+  });
+}
 if (statusFilter) statusFilter.addEventListener("change", renderJobs);
 
 if (downloadJobButton) {
@@ -564,6 +618,14 @@ if (downloadFullPackageButton) {
     if (!job) return;
     const stamp = new Date().toISOString().slice(0, 10);
     downloadFile(`${safeSlug(job.company)}_${safeSlug(job.role)}_${stamp}_full_package.md`, buildFullPackageMarkdown(job));
+  });
+}
+
+if (downloadJobDocxZipButton) {
+  downloadJobDocxZipButton.addEventListener("click", () => {
+    const job = saveCurrentJob();
+    if (!job) return;
+    downloadWordDocsZip(job.generatedPackage || output?.value || "", job, trackerStatus);
   });
 }
 
@@ -722,6 +784,7 @@ if (clearButton) {
   clearButton.addEventListener("click", () => {
     if (output) output.value = "";
     if (downloadButton) downloadButton.disabled = true;
+    if (downloadDocxZipButton) downloadDocxZipButton.disabled = true;
     setText(tailorStatus, "");
   });
 }
