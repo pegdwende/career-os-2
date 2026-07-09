@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const { getSession } = require("../../api/_admin-auth");
 const { loadProfile } = require("../../api/_admin-store");
+const { callOpenAi, isOpenAiRequestError } = require("./_openai");
 
 const MAX_JOB_DESCRIPTION_LENGTH = 24000;
 
@@ -65,40 +66,6 @@ function buildInput(context, body) {
   ];
 }
 
-async function callOpenAi(input) {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) throw new Error("OPENAI_API_KEY is not configured.");
-
-  const response = await fetch("https://api.openai.com/v1/responses", {
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${apiKey}`,
-      "content-type": "application/json"
-    },
-    body: JSON.stringify({
-      model: process.env.ADMIN_OPENAI_MODEL || process.env.OPENAI_MODEL || "gpt-4.1-mini",
-      input,
-      max_output_tokens: 4500,
-      temperature: 0.25
-    })
-  });
-
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    throw new Error(payload?.error?.message || "OpenAI generation failed.");
-  }
-
-  return (
-    payload.output_text ||
-    payload.output
-      ?.flatMap((item) => item.content || [])
-      ?.map((item) => item.text || "")
-      ?.join("\n")
-      ?.trim() ||
-    ""
-  );
-}
-
 module.exports = async function handler(req, res) {
   const session = getSession(req);
   if (!session) {
@@ -135,7 +102,8 @@ module.exports = async function handler(req, res) {
         company: String(body.company || "").slice(0, 120),
         role: String(body.role || "").slice(0, 160),
         jobDescription
-      })
+      }),
+      { maxOutputTokens: 4500, temperature: 0.25 }
     );
 
     return json(res, 200, { markdown });
@@ -146,6 +114,9 @@ module.exports = async function handler(req, res) {
     }
     if (error.code === "ENCRYPTION_NOT_CONFIGURED") {
       return json(res, 503, { error: "ADMIN_DATA_ENCRYPTION_KEY is not configured.", code: error.code });
+    }
+    if (isOpenAiRequestError(error)) {
+      return json(res, error.status || 502, { error: error.message, code: error.code });
     }
     return json(res, 500, { error: "Tailoring failed. Check configuration and try again." });
   }

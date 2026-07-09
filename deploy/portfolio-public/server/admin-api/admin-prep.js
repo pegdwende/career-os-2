@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const { getSession } = require("../../api/_admin-auth");
 const { loadProfile } = require("../../api/_admin-store");
+const { callOpenAi, isOpenAiRequestError } = require("./_openai");
 
 const MAX_TEXT_LENGTH = 30000;
 
@@ -47,38 +48,6 @@ async function loadUserContext(session) {
   return `# encrypted-user-profile\n${JSON.stringify(profile, null, 2)}`;
 }
 
-async function callOpenAi(input) {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) throw new Error("OPENAI_API_KEY is not configured.");
-
-  const response = await fetch("https://api.openai.com/v1/responses", {
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${apiKey}`,
-      "content-type": "application/json"
-    },
-    body: JSON.stringify({
-      model: process.env.ADMIN_OPENAI_MODEL || process.env.OPENAI_MODEL || "gpt-4.1-mini",
-      input,
-      max_output_tokens: 3500,
-      temperature: 0.25
-    })
-  });
-
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(payload?.error?.message || "OpenAI generation failed.");
-
-  return (
-    payload.output_text ||
-    payload.output
-      ?.flatMap((item) => item.content || [])
-      ?.map((item) => item.text || "")
-      ?.join("\n")
-      ?.trim() ||
-    ""
-  );
-}
-
 module.exports = async function handler(req, res) {
   const session = getSession(req);
   if (!session) return json(res, 401, { error: "Admin login required." });
@@ -107,17 +76,20 @@ module.exports = async function handler(req, res) {
 
   try {
     const context = await loadUserContext(session);
-    const prep = await callOpenAi([
-      {
-        role: "system",
-        content:
-          "You are a private interview preparation assistant for Rodrigue Compaore. Use only the supplied candidate facts, job description, generated package, and user notes. Do not invent facts. Mark missing facts as NEEDS_CONFIRMATION. Produce concise Markdown that helps prepare for recruiter screens, phone screens, technical screens, hiring manager interviews, and follow-up."
-      },
-      {
-        role: "user",
-        content: `Candidate context:\n${context}\n\nCompany: ${company || "Unknown"}\nRole: ${role || "Unknown"}\n\nJob description:\n${jobDescription || "Not provided"}\n\nGenerated resume package:\n${generatedPackage || "Not provided"}\n\nApplication/interview notes:\n${notes || "None"}\n\nCreate Markdown with these sections:\n1. Company and Role Snapshot\n2. Why This Role\n3. Phone Screen Talking Points\n4. Likely Recruiter Questions and Answers\n5. Technical / Leadership Talking Points\n6. STAR Stories To Prepare\n7. Gaps, Risks, and NEEDS_CONFIRMATION\n8. Questions To Ask Them\n9. Follow-up Email Draft`
-      }
-    ]);
+    const prep = await callOpenAi(
+      [
+        {
+          role: "system",
+          content:
+            "You are a private interview preparation assistant for Rodrigue Compaore. Use only the supplied candidate facts, job description, generated package, and user notes. Do not invent facts. Mark missing facts as NEEDS_CONFIRMATION. Produce concise Markdown that helps prepare for recruiter screens, phone screens, technical screens, hiring manager interviews, and follow-up."
+        },
+        {
+          role: "user",
+          content: `Candidate context:\n${context}\n\nCompany: ${company || "Unknown"}\nRole: ${role || "Unknown"}\n\nJob description:\n${jobDescription || "Not provided"}\n\nGenerated resume package:\n${generatedPackage || "Not provided"}\n\nApplication/interview notes:\n${notes || "None"}\n\nCreate Markdown with these sections:\n1. Company and Role Snapshot\n2. Why This Role\n3. Phone Screen Talking Points\n4. Likely Recruiter Questions and Answers\n5. Technical / Leadership Talking Points\n6. STAR Stories To Prepare\n7. Gaps, Risks, and NEEDS_CONFIRMATION\n8. Questions To Ask Them\n9. Follow-up Email Draft`
+        }
+      ],
+      { maxOutputTokens: 3500, temperature: 0.25 }
+    );
 
     return json(res, 200, { prep });
   } catch (error) {
@@ -127,6 +99,9 @@ module.exports = async function handler(req, res) {
     }
     if (error.code === "ENCRYPTION_NOT_CONFIGURED") {
       return json(res, 503, { error: "ADMIN_DATA_ENCRYPTION_KEY is not configured.", code: error.code });
+    }
+    if (isOpenAiRequestError(error)) {
+      return json(res, error.status || 502, { error: error.message, code: error.code });
     }
     return json(res, 500, { error: "Interview prep generation failed. Check configuration and try again." });
   }
