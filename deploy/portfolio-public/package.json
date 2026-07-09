@@ -4,6 +4,6 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "node scripts/local-dev-server.js",
-    "check": "node --check scripts/local-dev-server.js && node --check api/chat.js && node --check api/contact.js && node --check api/download-resume.js && node --check api/_admin-auth.js && node --check api/_admin-store.js && node --check api/_admin-users.js && node --check api/admin-login.js && node --check api/admin-register.js && node --check api/admin-invites.js && node --check api/admin-me.js && node --check api/admin-tailor.js && node --check api/admin-prep.js && node --check api/admin-research.js && node --check api/admin-jobs.js && node --check script.js && node --check admin.js && node --check analytics.js"
+    "check": "node --check scripts/local-dev-server.js && node --check api/chat.js && node --check api/contact.js && node --check api/download-resume.js && node --check api/_admin-auth.js && node --check api/_admin-store.js && node --check api/_admin-users.js && node --check api/admin-login.js && node --check api/admin-register.js && node --check api/admin-invites.js && node --check api/admin-me.js && node --check api/admin-health.js && node --check api/admin-profile.js && node --check api/admin-web-research.js && node --check api/admin-tailor.js && node --check api/admin-prep.js && node --check api/admin-research.js && node --check api/admin-jobs.js && node --check script.js && node --check admin.js && node --check analytics.js"
   }
 }

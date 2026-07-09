@@ -150,6 +150,9 @@ CONTACT_DAILY_IP_LIMIT=5
 DOWNLOAD_DAILY_IP_LIMIT=20
 DOWNLOAD_DAILY_SITE_LIMIT=1000
 DOWNLOAD_IP_HASH_SALT=...
+
+TAVILY_API_KEY=...
+BRAVE_SEARCH_API_KEY=...
 ```
 
 Use long random values for:
@@ -160,6 +163,10 @@ Use long random values for:
 - `DOWNLOAD_IP_HASH_SALT`
 
 Do not commit those values to Git.
+
+`TAVILY_API_KEY` and `BRAVE_SEARCH_API_KEY` are optional. Configure one of them to enable private
+admin web research with source URLs and snippets. If neither is configured, the rest of the app still
+works and the web research button will report that search is not configured.
 
 ## Generate Strong Secrets
 
@@ -202,6 +209,10 @@ Smoke test:
 10. Create a friend account.
 11. Confirm the friend account has an empty separate tracker.
 12. Confirm friend account cannot use owner-only resume tailoring.
+13. Run owner diagnostics from the admin dashboard.
+14. Save an encrypted resume profile for a member account.
+15. Generate tailoring from the member profile.
+16. If a search provider key is configured, run web research and confirm sources are saved.
 
 ## Optional Custom Domain
 
@@ -289,6 +300,15 @@ Check:
 - `OPENAI_MODEL`
 - `ADMIN_OPENAI_MODEL`
 - OpenAI account billing and usage limits.
+
+### Web research fails
+
+Check:
+
+- `TAVILY_API_KEY` or `BRAVE_SEARCH_API_KEY`
+- Search provider quota
+- Search provider billing
+- Query length under 220 characters
 
 ### Costs are higher than expected
 

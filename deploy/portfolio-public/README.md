@@ -39,6 +39,8 @@ CONTACT_DAILY_IP_LIMIT=5
 DOWNLOAD_DAILY_IP_LIMIT=20
 DOWNLOAD_DAILY_SITE_LIMIT=1000
 DOWNLOAD_IP_HASH_SALT=...
+TAVILY_API_KEY=...
+BRAVE_SEARCH_API_KEY=...
 ```
 
 The OpenAI and Redis keys are used only by Vercel serverless functions. They are never shipped to
@@ -50,12 +52,16 @@ The private admin page is `admin.html`. It supports:
 
 - owner passcode login with an HttpOnly session cookie
 - invite-only friend accounts with email/password login
+- owner diagnostics for environment variables, bundled files, Redis, OpenAI config, and web research config
+- dashboard counters for total jobs, follow-ups, stale applications, and research coverage
+- encrypted per-user resume profiles for member tailoring
 - paste job description
 - generate a tailored Markdown package
 - edit generated Markdown in-browser
 - download Markdown locally
 - track company, role, job URL, status, recruiter contact, compensation notes, follow-up date, and interview notes
 - paste company research, interview reports, and coding challenge notes for a saved job
+- optionally run web research with cited sources using Tavily or Brave Search
 - generate a company snapshot, role summary, likely interview loop, practice questions, and coding/system design prep
 - generate interview / phone screen prep from the saved job
 - store the job tracker in an encrypted Redis-backed database
@@ -75,19 +81,21 @@ Invite-only accounts:
 - The owner can create a seven-day invite link from the admin page.
 - Invited users create an email/password account from the invite link.
 - Each account gets a separate encrypted job tracker namespace in Redis.
+- Each account can save a separate encrypted resume profile for tailoring.
 - Each account gets a separate browser `localStorage` cache.
 - V1 does not include public registration or forgot password.
-- The owner-only resume tailor and private interview prep remain restricted to the owner until
-  per-user resume profiles are added, because those endpoints use Rodrigue's private resume context.
+- The owner account uses Rodrigue's bundled private context. Member accounts use their own encrypted
+  resume profile and cannot access Rodrigue's private context files.
 
 Private context files live under `api/private-data`, `api/private-prompts`, and
 `api/private-templates`. `vercel.json` bundles them only into the admin tailor function. Do not link
 to those folders from public pages.
 
-The company research generator does not browse the web. It summarizes the job description and any
-research or interview notes pasted into the admin page. Reported or recent interview questions are
-only treated as reported when they appear in the pasted notes; otherwise the output labels them as
-inferred practice areas.
+The company research generator summarizes the job description and any research or interview notes
+pasted into the admin page. Optional web research uses `TAVILY_API_KEY` or `BRAVE_SEARCH_API_KEY`
+server-side and saves source URLs, snippets, provider, query, and timestamp in the encrypted job
+record. Reported or recent interview questions should still be verified manually before treating
+them as confirmed.
 
 The admin job tracker is stored server-side as an encrypted blob in Redis. The browser keeps a
 `localStorage` cache so the tracker remains usable if the database is temporarily unavailable. Use

@@ -54,10 +54,28 @@
             <h1>Tailor a resume package.</h1>
           </div>
           <p>
-            Uses private resume data and the existing tailoring prompt server-side. The generated
+            Uses your encrypted resume profile and the tailoring prompt server-side. The generated
             package is editable here and downloadable as Markdown.
           </p>
         </div>
+
+        <section class="job-tracker" aria-label="Admin dashboard">
+          <div class="tracker-heading">
+            <div>
+              <p class="section-kicker">Dashboard</p>
+              <h2>Pipeline snapshot.</h2>
+            </div>
+            <div class="admin-actions">
+              <button class="button secondary" type="button" data-refresh-health data-owner-only>
+                Run Diagnostics
+              </button>
+            </div>
+          </div>
+          <div class="admin-fields" data-dashboard-stats>
+            <p class="empty-list">No jobs loaded yet.</p>
+          </div>
+          <pre class="diagnostics-output" data-health-output data-owner-only hidden></pre>
+        </section>
 
         <section class="job-tracker" data-owner-tools hidden aria-label="Owner invite tools">
           <div class="tracker-heading">
@@ -75,6 +93,50 @@
             <input type="text" data-invite-output readonly />
           </label>
           <p class="chat-status" data-invite-status role="status"></p>
+        </section>
+
+        <section class="job-tracker" aria-label="Resume profile">
+          <div class="tracker-heading">
+            <div>
+              <p class="section-kicker">Resume Profile</p>
+              <h2>Encrypted facts used for tailoring.</h2>
+              <p>Members must save a profile before generating resume materials. Owner accounts can still use bundled private context.</p>
+            </div>
+            <div class="admin-actions">
+              <button class="button secondary" type="button" data-save-profile>Save Profile</button>
+            </div>
+          </div>
+          <div class="admin-fields">
+            <label>
+              <span>Headline</span>
+              <input type="text" data-profile-headline maxlength="240" placeholder="Engineering leader, platform architect, data/AI builder..." />
+            </label>
+            <label>
+              <span>Summary</span>
+              <textarea data-profile-summary rows="4" placeholder="Short career summary, target roles, industries, and strengths..."></textarea>
+            </label>
+            <label>
+              <span>Skills</span>
+              <textarea data-profile-skills rows="4" placeholder="Languages, cloud, data, AI, leadership, architecture, tools..."></textarea>
+            </label>
+            <label>
+              <span>Experience</span>
+              <textarea data-profile-experience rows="6" placeholder="Roles, responsibilities, scope, teams, domains, and dates..."></textarea>
+            </label>
+            <label>
+              <span>Projects</span>
+              <textarea data-profile-projects rows="5" placeholder="Projects, architecture patterns, outcomes, and public-safe details..."></textarea>
+            </label>
+            <label>
+              <span>Metrics</span>
+              <textarea data-profile-metrics rows="4" placeholder="Supported metrics, team size, budget ownership, performance, delivery, savings..."></textarea>
+            </label>
+            <label>
+              <span>Constraints</span>
+              <textarea data-profile-constraints rows="3" placeholder="Facts to avoid, NDA boundaries, unsupported claims, preferred wording..."></textarea>
+            </label>
+          </div>
+          <p class="chat-status" data-profile-status role="status"></p>
         </section>
 
         <form class="admin-form" data-tailor-form>
@@ -99,11 +161,11 @@
             ></textarea>
           </label>
           <div class="admin-actions">
-            <button class="button primary" type="submit" data-owner-only>Generate</button>
-            <button class="button secondary" type="button" data-download-markdown data-owner-only disabled>
+            <button class="button primary" type="submit">Generate</button>
+            <button class="button secondary" type="button" data-download-markdown disabled>
               Download Markdown
             </button>
-            <button class="button secondary" type="button" data-clear-output data-owner-only>Clear</button>
+            <button class="button secondary" type="button" data-clear-output>Clear</button>
           </div>
           <p class="chat-status" data-tailor-status role="status"></p>
         </form>
@@ -201,14 +263,22 @@
                   placeholder="Paste company notes, recruiter details, interview reports, coding challenge notes, or links you want summarized..."
                 ></textarea>
               </label>
+              <label>
+                <span>Web research query</span>
+                <input type="text" data-web-query maxlength="220" placeholder="Company role interview questions engineering manager" />
+              </label>
               <div class="admin-actions">
+                <button class="button secondary" type="button" data-web-research>
+                  Research Web Sources
+                </button>
                 <button class="button primary" type="button" data-generate-research>
                   Generate Company Research
                 </button>
-                <button class="button primary" type="button" data-generate-prep data-owner-only>
+                <button class="button primary" type="button" data-generate-prep>
                   Generate Interview Prep
                 </button>
                 <button class="button secondary" type="button" data-download-job-package>Download Selected Job Markdown</button>
+                <button class="button secondary" type="button" data-download-full-package>Download Full Package</button>
                 <button class="button secondary" type="button" data-delete-job>Delete Job</button>
               </div>
               <p class="chat-status" data-tracker-status role="status"></p>
@@ -216,7 +286,7 @@
           </div>
         </section>
 
-        <section class="admin-output" data-owner-only aria-label="Generated package">
+        <section class="admin-output" aria-label="Generated package">
           <label>
             <span>Editable generated package</span>
             <textarea data-tailor-output rows="28" placeholder="Generated resume package will appear here."></textarea>

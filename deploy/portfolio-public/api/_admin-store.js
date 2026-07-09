@@ -2,6 +2,7 @@ const crypto = require("crypto");
 
 const MAX_JOBS = 500;
 const MAX_JOBS_BYTES = 2_000_000;
+const MAX_PROFILE_BYTES = 250_000;
 
 function getRedisConfig() {
   const url = process.env.UPSTASH_REDIS_REST_URL;
@@ -35,6 +36,10 @@ async function redisCommand(command) {
 
 function jobsKey(userId = "owner") {
   return `admin:jobs:${String(userId || "owner").replace(/[^a-zA-Z0-9_-]/g, "_")}:v1`;
+}
+
+function profileKey(userId = "owner") {
+  return `admin:profile:${String(userId || "owner").replace(/[^a-zA-Z0-9_-]/g, "_")}:v1`;
 }
 
 function getEncryptionSecret() {
@@ -101,6 +106,32 @@ function validateJobs(jobs) {
   return jobs;
 }
 
+function validateProfile(profile) {
+  if (!profile || typeof profile !== "object" || Array.isArray(profile)) {
+    const error = new Error("Profile payload must be an object.");
+    error.code = "INVALID_PROFILE";
+    throw error;
+  }
+
+  const normalized = {
+    headline: String(profile.headline || "").slice(0, 240),
+    summary: String(profile.summary || "").slice(0, 8000),
+    skills: String(profile.skills || "").slice(0, 12000),
+    experience: String(profile.experience || "").slice(0, 40000),
+    projects: String(profile.projects || "").slice(0, 30000),
+    metrics: String(profile.metrics || "").slice(0, 12000),
+    constraints: String(profile.constraints || "").slice(0, 12000),
+    updatedAt: new Date().toISOString()
+  };
+
+  if (Buffer.byteLength(JSON.stringify(normalized), "utf8") > MAX_PROFILE_BYTES) {
+    const error = new Error("Profile payload is too large.");
+    error.code = "INVALID_PROFILE";
+    throw error;
+  }
+  return normalized;
+}
+
 async function loadJobs(userId = "owner") {
   const encrypted = await redisCommand(["GET", jobsKey(userId)]);
   return validateJobs(decryptJson(encrypted));
@@ -111,11 +142,25 @@ async function saveJobs(userId = "owner", jobs) {
   await redisCommand(["SET", jobsKey(userId), encryptJson(validated)]);
 }
 
+async function loadProfile(userId = "owner") {
+  const encrypted = await redisCommand(["GET", profileKey(userId)]);
+  if (!encrypted) return null;
+  return validateProfile(decryptJson(encrypted));
+}
+
+async function saveProfile(userId = "owner", profile) {
+  const validated = validateProfile(profile);
+  await redisCommand(["SET", profileKey(userId), encryptJson(validated)]);
+  return validated;
+}
+
 module.exports = {
   decryptJson,
   encryptJson,
   loadJobs,
+  loadProfile,
   redisCommand,
   saveJobs,
+  saveProfile,
   validateJobs
 };

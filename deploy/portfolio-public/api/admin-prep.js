@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { getSession } = require("./_admin-auth");
+const { loadProfile } = require("./_admin-store");
 
 const MAX_TEXT_LENGTH = 30000;
 
@@ -33,6 +34,17 @@ function loadContext() {
     })
     .filter(Boolean)
     .join("\n\n");
+}
+
+async function loadUserContext(session) {
+  if (session.role === "owner") return loadContext();
+  const profile = await loadProfile(session.userId);
+  if (!profile) {
+    const error = new Error("Save your resume profile before generating interview prep.");
+    error.code = "PROFILE_REQUIRED";
+    throw error;
+  }
+  return `# encrypted-user-profile\n${JSON.stringify(profile, null, 2)}`;
 }
 
 async function callOpenAi(input) {
@@ -70,9 +82,6 @@ async function callOpenAi(input) {
 module.exports = async function handler(req, res) {
   const session = getSession(req);
   if (!session) return json(res, 401, { error: "Admin login required." });
-  if (session.role !== "owner") {
-    return json(res, 403, { error: "Owner access required for private resume interview prep." });
-  }
 
   if (req.method !== "POST") {
     res.setHeader("allow", "POST");
@@ -97,7 +106,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const context = loadContext();
+    const context = await loadUserContext(session);
     const prep = await callOpenAi([
       {
         role: "system",
@@ -111,7 +120,14 @@ module.exports = async function handler(req, res) {
     ]);
 
     return json(res, 200, { prep });
-  } catch {
+  } catch (error) {
+    if (error.code === "PROFILE_REQUIRED") return json(res, 400, { error: error.message, code: error.code });
+    if (error.code === "DATABASE_NOT_CONFIGURED") {
+      return json(res, 503, { error: "Encrypted profile database is not configured.", code: error.code });
+    }
+    if (error.code === "ENCRYPTION_NOT_CONFIGURED") {
+      return json(res, 503, { error: "ADMIN_DATA_ENCRYPTION_KEY is not configured.", code: error.code });
+    }
     return json(res, 500, { error: "Interview prep generation failed. Check configuration and try again." });
   }
 };

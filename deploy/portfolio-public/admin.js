@@ -9,6 +9,20 @@ const ownerOnlyNodes = document.querySelectorAll("[data-owner-only]");
 const createInviteButton = document.querySelector("[data-create-invite]");
 const inviteOutput = document.querySelector("[data-invite-output]");
 const inviteStatus = document.querySelector("[data-invite-status]");
+const dashboardStats = document.querySelector("[data-dashboard-stats]");
+const refreshHealthButton = document.querySelector("[data-refresh-health]");
+const healthOutput = document.querySelector("[data-health-output]");
+const profileStatus = document.querySelector("[data-profile-status]");
+const saveProfileButton = document.querySelector("[data-save-profile]");
+const profileFields = {
+  headline: document.querySelector("[data-profile-headline]"),
+  summary: document.querySelector("[data-profile-summary]"),
+  skills: document.querySelector("[data-profile-skills]"),
+  experience: document.querySelector("[data-profile-experience]"),
+  projects: document.querySelector("[data-profile-projects]"),
+  metrics: document.querySelector("[data-profile-metrics]"),
+  constraints: document.querySelector("[data-profile-constraints]")
+};
 const tailorForm = document.querySelector("[data-tailor-form]");
 const tailorStatus = document.querySelector("[data-tailor-status]");
 const trackerStatus = document.querySelector("[data-tracker-status]");
@@ -29,9 +43,12 @@ const recruiterContact = document.querySelector("[data-recruiter-contact]");
 const compNotes = document.querySelector("[data-comp-notes]");
 const jobNotes = document.querySelector("[data-job-notes]");
 const researchSources = document.querySelector("[data-research-sources]");
+const webQuery = document.querySelector("[data-web-query]");
+const webResearchButton = document.querySelector("[data-web-research]");
 const generateResearchButton = document.querySelector("[data-generate-research]");
 const generatePrepButton = document.querySelector("[data-generate-prep]");
 const downloadJobButton = document.querySelector("[data-download-job-package]");
+const downloadFullPackageButton = document.querySelector("[data-download-full-package]");
 const deleteJobButton = document.querySelector("[data-delete-job]");
 
 const STORAGE_PREFIX = "career_os_admin_jobs_v1";
@@ -54,13 +71,16 @@ function showApp() {
     .then(() => {
       renderJobs();
       fillJobDetail(selectedJob());
+      renderDashboard();
     })
     .catch(() => {
       loadJobsFromLocal();
       renderJobs();
       fillJobDetail(selectedJob());
+      renderDashboard();
       setText(trackerStatus, "Using local browser backup until the encrypted database is available.");
     });
+  loadProfile().catch(() => {});
 }
 
 function showInviteRegistrationIfNeeded() {
@@ -86,6 +106,30 @@ function getTailorFormValues() {
     role: String(formData.get("role") || "").trim(),
     jobDescription: String(formData.get("jobDescription") || "").trim()
   };
+}
+
+function getProfileValues() {
+  return Object.fromEntries(
+    Object.entries(profileFields).map(([key, node]) => [key, node ? String(node.value || "").trim() : ""])
+  );
+}
+
+function setProfileValues(profile) {
+  Object.entries(profileFields).forEach(([key, node]) => {
+    if (node) node.value = profile?.[key] || "";
+  });
+}
+
+async function loadProfile() {
+  try {
+    const response = await fetch("/api/admin-profile", { method: "GET" });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(payload.error || "Profile load failed.");
+    setProfileValues(payload.profile || {});
+    if (payload.profile) setText(profileStatus, "Loaded encrypted resume profile.");
+  } catch (error) {
+    setText(profileStatus, error.message || "Profile database is unavailable.");
+  }
 }
 
 function setTailorFormValues(job) {
@@ -165,6 +209,7 @@ function normalizeJob(input, existing = {}) {
     compNotes: compNotes?.value || existing.compNotes || "",
     notes: jobNotes?.value || existing.notes || "",
     researchSources: researchSources?.value || existing.researchSources || "",
+    webResearch: existing.webResearch || [],
     generatedPackage: output?.value || existing.generatedPackage || "",
     companyResearch: existing.companyResearch || "",
     interviewPrep: existing.interviewPrep || "",
@@ -236,6 +281,42 @@ function renderJobs() {
   });
 }
 
+function renderDashboard() {
+  if (!dashboardStats) return;
+  const counts = jobs.reduce((acc, job) => {
+    const status = job.status || "Saved";
+    acc[status] = (acc[status] || 0) + 1;
+    return acc;
+  }, {});
+  const now = new Date();
+  const upcoming = jobs.filter((job) => {
+    if (!job.followUpDate) return false;
+    const date = new Date(`${job.followUpDate}T00:00:00`);
+    const days = (date - now) / (1000 * 60 * 60 * 24);
+    return days >= -1 && days <= 7;
+  }).length;
+  const stale = jobs.filter((job) => {
+    if (["Offer", "Rejected", "Archived"].includes(job.status)) return false;
+    const updated = new Date(job.updatedAt || job.dateSaved || 0);
+    return Number.isFinite(updated.getTime()) && now - updated > 14 * 24 * 60 * 60 * 1000;
+  }).length;
+  const researched = jobs.filter((job) => job.companyResearch || job.webResearch?.length).length;
+
+  dashboardStats.innerHTML = "";
+  [
+    ["Total jobs", jobs.length],
+    ["Upcoming follow-ups", upcoming],
+    ["Stale active jobs", stale],
+    ["With research", researched],
+    ...Object.entries(counts).sort()
+  ].forEach(([label, value]) => {
+    const item = document.createElement("p");
+    item.className = "dashboard-stat";
+    item.innerHTML = `<strong>${value}</strong><span>${label}</span>`;
+    dashboardStats.appendChild(item);
+  });
+}
+
 function saveCurrentJob(statusOverride) {
   const values = getTailorFormValues();
   const existing = selectedJob();
@@ -255,6 +336,7 @@ function saveCurrentJob(statusOverride) {
     if (savedRemote) setText(trackerStatus, `Saved ${job.company} - ${job.role} to encrypted database.`);
   });
   renderJobs();
+  renderDashboard();
   setText(trackerStatus, `Saved ${job.company} - ${job.role}.`);
   return job;
 }
@@ -300,6 +382,12 @@ ${job.notes || ""}
 
 ${job.researchSources || ""}
 
+## Web Research Sources
+
+${(job.webResearch || [])
+  .map((item) => `### ${item.query || "Research"}\n\n${item.markdown || ""}`)
+  .join("\n\n")}
+
 ## Job Description
 
 ${job.jobDescription || ""}
@@ -315,6 +403,16 @@ ${job.companyResearch || ""}
 ## Interview Prep
 
 ${job.interviewPrep || ""}
+`;
+}
+
+function buildFullPackageMarkdown(job) {
+  return `${buildJobMarkdown(job)}
+
+## Export Metadata
+
+Exported: ${new Date().toISOString()}
+Account: ${currentUser?.email || "unknown"}
 `;
 }
 
@@ -426,12 +524,6 @@ if (tailorForm) {
     event.preventDefault();
     const body = getTailorFormValues();
 
-    if (currentUser?.role !== "owner") {
-      saveCurrentJob();
-      setText(tailorStatus, "Saved job details. Private resume tailoring is owner-only in this version.");
-      return;
-    }
-
     setText(tailorStatus, "Generating tailored package...");
     if (downloadButton) downloadButton.disabled = true;
 
@@ -466,6 +558,15 @@ if (downloadJobButton) {
   });
 }
 
+if (downloadFullPackageButton) {
+  downloadFullPackageButton.addEventListener("click", () => {
+    const job = saveCurrentJob();
+    if (!job) return;
+    const stamp = new Date().toISOString().slice(0, 10);
+    downloadFile(`${safeSlug(job.company)}_${safeSlug(job.role)}_${stamp}_full_package.md`, buildFullPackageMarkdown(job));
+  });
+}
+
 if (exportJobsButton) {
   exportJobsButton.addEventListener("click", () => {
     const stamp = new Date().toISOString().slice(0, 10);
@@ -484,6 +585,7 @@ if (importJobsInput) {
       selectedJobId = jobs[0]?.id || "";
       fillJobDetail(selectedJob());
       renderJobs();
+      renderDashboard();
       persistJobs();
       setText(trackerStatus, `Imported ${jobs.length} jobs.`);
     } catch (error) {
@@ -519,9 +621,50 @@ if (generateResearchButton) {
       job.updatedAt = new Date().toISOString();
       persistJobs();
       fillJobDetail(job);
+      renderDashboard();
       setText(trackerStatus, "Company research generated and saved in notes.");
     } catch (error) {
       setText(trackerStatus, error.message || "Company research generation failed.");
+    }
+  });
+}
+
+if (webResearchButton) {
+  webResearchButton.addEventListener("click", async () => {
+    const job = saveCurrentJob();
+    if (!job) return;
+    setText(trackerStatus, "Researching web sources...");
+
+    try {
+      const response = await fetch("/api/admin-web-research", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          company: job.company,
+          role: job.role,
+          query: webQuery?.value || ""
+        })
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(payload.error || "Web research failed.");
+      job.webResearch = [
+        ...(job.webResearch || []),
+        {
+          query: payload.query,
+          provider: payload.provider,
+          results: payload.results || [],
+          markdown: payload.markdown || "",
+          researchedAt: new Date().toISOString()
+        }
+      ];
+      job.researchSources = `${job.researchSources || ""}\n\n${payload.markdown || ""}`.trim();
+      job.updatedAt = new Date().toISOString();
+      persistJobs();
+      fillJobDetail(job);
+      renderDashboard();
+      setText(trackerStatus, `Saved ${payload.results?.length || 0} web research sources.`);
+    } catch (error) {
+      setText(trackerStatus, error.message || "Web research failed.");
     }
   });
 }
@@ -551,6 +694,7 @@ if (generatePrepButton) {
       job.updatedAt = new Date().toISOString();
       persistJobs();
       fillJobDetail(job);
+      renderDashboard();
       setText(trackerStatus, "Interview prep generated and saved in notes.");
     } catch (error) {
       setText(trackerStatus, error.message || "Interview prep generation failed.");
@@ -569,6 +713,7 @@ if (deleteJobButton) {
     persistJobs();
     fillJobDetail(selectedJob());
     renderJobs();
+    renderDashboard();
     setText(trackerStatus, "Job deleted.");
   });
 }
@@ -578,6 +723,41 @@ if (clearButton) {
     if (output) output.value = "";
     if (downloadButton) downloadButton.disabled = true;
     setText(tailorStatus, "");
+  });
+}
+
+if (saveProfileButton) {
+  saveProfileButton.addEventListener("click", async () => {
+    setText(profileStatus, "Saving encrypted resume profile...");
+    try {
+      const response = await fetch("/api/admin-profile", {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ profile: getProfileValues() })
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(payload.error || "Profile save failed.");
+      setProfileValues(payload.profile || {});
+      setText(profileStatus, "Resume profile saved to encrypted database.");
+    } catch (error) {
+      setText(profileStatus, error.message || "Profile save failed.");
+    }
+  });
+}
+
+if (refreshHealthButton) {
+  refreshHealthButton.addEventListener("click", async () => {
+    if (healthOutput) {
+      healthOutput.hidden = false;
+      healthOutput.textContent = "Running diagnostics...";
+    }
+    try {
+      const response = await fetch("/api/admin-health", { method: "GET" });
+      const payload = await response.json().catch(() => ({}));
+      if (healthOutput) healthOutput.textContent = JSON.stringify(payload, null, 2);
+    } catch (error) {
+      if (healthOutput) healthOutput.textContent = error.message || "Diagnostics failed.";
+    }
   });
 }
 

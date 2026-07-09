@@ -937,6 +937,37 @@ h2 {
   font-size: 13px;
 }
 
+.dashboard-stat {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin: 0;
+  padding: 0.85rem;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.dashboard-stat strong {
+  display: block;
+  color: var(--ink);
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.dashboard-stat span {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.diagnostics-output {
+  overflow: auto;
+  max-height: 24rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1rem;
+  background: #111827;
+  color: #e5e7eb;
+  font-size: 0.82rem;
+}
+
 .job-item em {
   font-style: normal;
   font-weight: 800;
