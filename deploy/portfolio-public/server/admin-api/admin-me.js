@@ -1,4 +1,4 @@
-const { getSession } = require("./_admin-auth");
+const { getSession } = require("../../api/_admin-auth");
 
 function json(res, status, body) {
   res.statusCode = status;

@@ -1,5 +1,5 @@
-const { createSessionCookie } = require("./_admin-auth");
-const { registerInvitedUser } = require("./_admin-users");
+const { createSessionCookie } = require("../../api/_admin-auth");
+const { registerInvitedUser } = require("../../api/_admin-users");
 
 function json(res, status, body) {
   res.statusCode = status;

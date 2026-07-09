@@ -1,5 +1,5 @@
-const { getSession } = require("./_admin-auth");
-const { loadProfile, saveProfile } = require("./_admin-store");
+const { getSession } = require("../../api/_admin-auth");
+const { loadJobs, saveJobs } = require("../../api/_admin-store");
 
 function json(res, status, body) {
   res.statusCode = status;
@@ -10,15 +10,17 @@ function json(res, status, body) {
 
 function errorResponse(res, error) {
   if (error.code === "DATABASE_NOT_CONFIGURED") {
-    return json(res, 503, { error: "Encrypted profile database is not configured." });
+    return json(res, 503, {
+      error: "Encrypted job database is not configured. Set Redis and ADMIN_DATA_ENCRYPTION_KEY."
+    });
   }
   if (error.code === "ENCRYPTION_NOT_CONFIGURED") {
     return json(res, 503, { error: "ADMIN_DATA_ENCRYPTION_KEY is not configured." });
   }
-  if (error.code === "INVALID_PROFILE") {
+  if (error.code === "INVALID_JOBS") {
     return json(res, 400, { error: error.message });
   }
-  return json(res, 500, { error: "Encrypted profile database is temporarily unavailable." });
+  return json(res, 500, { error: "Encrypted job database is temporarily unavailable." });
 }
 
 module.exports = async function handler(req, res) {
@@ -27,8 +29,8 @@ module.exports = async function handler(req, res) {
 
   if (req.method === "GET") {
     try {
-      const profile = await loadProfile(session.userId);
-      return json(res, 200, { profile: profile || null, encrypted: true });
+      const jobs = await loadJobs(session.userId);
+      return json(res, 200, { jobs, encrypted: true });
     } catch (error) {
       return errorResponse(res, error);
     }
@@ -43,8 +45,8 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-      const profile = await saveProfile(session.userId, body.profile || {});
-      return json(res, 200, { ok: true, profile, encrypted: true });
+      await saveJobs(session.userId, body.jobs);
+      return json(res, 200, { ok: true, encrypted: true });
     } catch (error) {
       return errorResponse(res, error);
     }

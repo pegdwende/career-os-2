@@ -1,4 +1,4 @@
-const { isAuthenticated } = require("./_admin-auth");
+const { isAuthenticated } = require("../../api/_admin-auth");
 
 const MAX_TEXT_LENGTH = 30000;
 

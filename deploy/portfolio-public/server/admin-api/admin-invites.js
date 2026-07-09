@@ -1,5 +1,5 @@
-const { getSession } = require("./_admin-auth");
-const { createInvite } = require("./_admin-users");
+const { getSession } = require("../../api/_admin-auth");
+const { createInvite } = require("../../api/_admin-users");
 
 function json(res, status, body) {
   res.statusCode = status;

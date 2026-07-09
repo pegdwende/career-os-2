@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
-const { getSession } = require("./_admin-auth");
-const { redisCommand } = require("./_admin-store");
+const { getSession } = require("../../api/_admin-auth");
+const { redisCommand } = require("../../api/_admin-store");
 
 function json(res, status, body) {
   res.statusCode = status;
@@ -15,7 +15,7 @@ function envStatus(name, required = true) {
 }
 
 function fileStatus(relativePath) {
-  const fullPath = path.join(__dirname, relativePath);
+  const fullPath = path.join(__dirname, "../..", relativePath);
   return { path: relativePath, ok: fs.existsSync(fullPath) };
 }
 
@@ -43,10 +43,10 @@ module.exports = async function handler(req, res) {
       envStatus("BRAVE_SEARCH_API_KEY", false)
     ],
     files: [
-      fileStatus("../knowledge/public-profile.json"),
-      fileStatus("private-data/profile.yaml"),
-      fileStatus("private-prompts/tailor_resume.md"),
-      fileStatus("assets/rodrigue_compaore_public_resume.pdf")
+      fileStatus("knowledge/public-profile.json"),
+      fileStatus("api/private-data/profile.yaml"),
+      fileStatus("api/private-prompts/tailor_resume.md"),
+      fileStatus("api/assets/rodrigue_compaore_public_resume.pdf")
     ],
     services: []
   };

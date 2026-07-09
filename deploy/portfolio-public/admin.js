@@ -122,7 +122,7 @@ function setProfileValues(profile) {
 
 async function loadProfile() {
   try {
-    const response = await fetch("/api/admin-profile", { method: "GET" });
+    const response = await fetch("/api/admin?action=profile", { method: "GET" });
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(payload.error || "Profile load failed.");
     setProfileValues(payload.profile || {});
@@ -149,7 +149,7 @@ function loadJobsFromLocal() {
 
 async function loadJobs() {
   try {
-    const response = await fetch("/api/admin-jobs", { method: "GET" });
+    const response = await fetch("/api/admin?action=jobs", { method: "GET" });
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(payload.error || "Database load failed.");
     jobs = Array.isArray(payload.jobs) ? payload.jobs : [];
@@ -165,7 +165,7 @@ async function loadJobs() {
 
 function persistJobs() {
   localStorage.setItem(storageKey(), JSON.stringify(jobs));
-  return fetch("/api/admin-jobs", {
+  return fetch("/api/admin?action=jobs", {
     method: "PUT",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ jobs })
@@ -435,7 +435,7 @@ function downloadMarkdown() {
 }
 
 async function checkSession() {
-  const response = await fetch("/api/admin-me", { method: "GET" });
+  const response = await fetch("/api/admin?action=me", { method: "GET" });
   if (response.status === 200) {
     const payload = await response.json().catch(() => ({}));
     currentUser = payload.user || null;
@@ -450,7 +450,7 @@ if (loginForm) {
     setText(loginStatus, "Checking credentials...");
 
     try {
-      const response = await fetch("/api/admin-login", {
+      const response = await fetch("/api/admin?action=login", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -478,7 +478,7 @@ if (registerForm) {
     setText(registerStatus, "Creating account...");
 
     try {
-      const response = await fetch("/api/admin-register", {
+      const response = await fetch("/api/admin?action=register", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -505,7 +505,7 @@ if (createInviteButton) {
     if (inviteOutput) inviteOutput.value = "";
 
     try {
-      const response = await fetch("/api/admin-invites", { method: "POST" });
+      const response = await fetch("/api/admin?action=invites", { method: "POST" });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(payload.error || "Unable to create invite.");
       if (inviteOutput) {
@@ -528,7 +528,7 @@ if (tailorForm) {
     if (downloadButton) downloadButton.disabled = true;
 
     try {
-      const response = await fetch("/api/admin-tailor", {
+      const response = await fetch("/api/admin?action=tailor", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(body)
@@ -603,7 +603,7 @@ if (generateResearchButton) {
     setText(trackerStatus, "Generating company and interview research...");
 
     try {
-      const response = await fetch("/api/admin-research", {
+      const response = await fetch("/api/admin?action=research", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -636,7 +636,7 @@ if (webResearchButton) {
     setText(trackerStatus, "Researching web sources...");
 
     try {
-      const response = await fetch("/api/admin-web-research", {
+      const response = await fetch("/api/admin?action=web-research", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -676,7 +676,7 @@ if (generatePrepButton) {
     setText(trackerStatus, "Generating interview prep...");
 
     try {
-      const response = await fetch("/api/admin-prep", {
+      const response = await fetch("/api/admin?action=prep", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -730,7 +730,7 @@ if (saveProfileButton) {
   saveProfileButton.addEventListener("click", async () => {
     setText(profileStatus, "Saving encrypted resume profile...");
     try {
-      const response = await fetch("/api/admin-profile", {
+      const response = await fetch("/api/admin?action=profile", {
         method: "PUT",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ profile: getProfileValues() })
@@ -752,7 +752,7 @@ if (refreshHealthButton) {
       healthOutput.textContent = "Running diagnostics...";
     }
     try {
-      const response = await fetch("/api/admin-health", { method: "GET" });
+      const response = await fetch("/api/admin?action=health", { method: "GET" });
       const payload = await response.json().catch(() => ({}));
       if (healthOutput) healthOutput.textContent = JSON.stringify(payload, null, 2);
     } catch (error) {

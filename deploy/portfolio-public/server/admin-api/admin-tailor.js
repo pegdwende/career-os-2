@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
-const { getSession } = require("./_admin-auth");
-const { loadProfile } = require("./_admin-store");
+const { getSession } = require("../../api/_admin-auth");
+const { loadProfile } = require("../../api/_admin-store");
 
 const MAX_JOB_DESCRIPTION_LENGTH = 24000;
 
@@ -13,7 +13,7 @@ function json(res, status, body) {
 }
 
 function readIfExists(relativePath) {
-  const file = path.join(__dirname, relativePath);
+  const file = path.join(__dirname, "../../api", relativePath);
   return fs.existsSync(file) ? fs.readFileSync(file, "utf8") : "";
 }
 

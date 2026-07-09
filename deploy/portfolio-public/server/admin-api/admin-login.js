@@ -1,5 +1,5 @@
-const { createSessionCookie, passcodeMatches } = require("./_admin-auth");
-const { authenticateUser } = require("./_admin-users");
+const { createSessionCookie, passcodeMatches } = require("../../api/_admin-auth");
+const { authenticateUser } = require("../../api/_admin-users");
 const crypto = require("crypto");
 
 function json(res, status, body) {

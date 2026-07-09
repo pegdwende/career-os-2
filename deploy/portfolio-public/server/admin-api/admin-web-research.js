@@ -1,4 +1,4 @@
-const { isAuthenticated } = require("./_admin-auth");
+const { isAuthenticated } = require("../../api/_admin-auth");
 
 const MAX_QUERY_LENGTH = 220;
 const MAX_RESULTS = 6;
