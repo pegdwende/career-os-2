@@ -3,12 +3,7 @@
   "functions": {
     "api/*.js": {
       "maxDuration": 30,
-      "includeFiles": [
-        "api/private-data/**",
-        "api/private-prompts/**",
-        "api/private-templates/**",
-        "api/assets/**"
-      ]
+      "includeFiles": "api/{private-data,private-prompts,private-templates,assets}/**"
     }
   },
   "headers": [
